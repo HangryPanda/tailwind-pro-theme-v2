@@ -1,0 +1,757 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Interactive Components - ProTheme</title>
+  <link rel="stylesheet" href="./theme.css" />
+  <style>
+    ::-webkit-scrollbar {
+      width: 0.5rem;
+      height: 0.5rem;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: color-mix(in oklab, var(--border) 60%, transparent);
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: color-mix(in oklab, var(--border) 80%, transparent);
+    }
+
+    .fade-in {
+      animation: fadeIn 200ms ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body class="antialiased">
+  <!-- Navigation -->
+  <nav class="topbar">
+    <div class="flex-between w-full max-w-7xl mx-auto">
+      <div class="flex items-center gap-8">
+        <a href="index.html" class="text-title font-bold flex items-center gap-2">
+          <div class="w-8 h-8 rounded-lg" style="background: linear-gradient(135deg, var(--brand-blue), var(--brand-purple));"></div>
+          ProTheme
+        </a>
+        <div class="breadcrumb hidden md:flex">
+          <span class="breadcrumb-item">
+            <a href="index.html">Home</a>
+          </span>
+          <span class="breadcrumb-separator">/</span>
+          <span class="breadcrumb-item active">Interactive Components</span>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <button class="btn-ghost btn-sm" onclick="toggleTheme()">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+        </button>
+        <button class="btn-primary btn-sm" onclick="openCommandPalette()">
+          <span class="kbd">⌘K</span>
+          Quick Command
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="max-w-7xl mx-auto px-6 py-12">
+    <!-- Header -->
+    <div class="mb-12">
+      <h1 class="text-display mb-4">Interactive Components</h1>
+      <p class="text-body-lg text-muted max-w-3xl">
+        Explore fully interactive components with JavaScript functionality. All components are production-ready
+        with proper accessibility, keyboard navigation, and smooth animations.
+      </p>
+    </div>
+
+    <!-- Alert about interactivity -->
+    <div class="alert alert-info mb-8">
+      <svg class="alert-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      <div class="alert-content">
+        <div class="alert-title">Try it yourself!</div>
+        Click on any component to see it in action. Press <span class="kbd">⌘K</span> to open the command palette.
+      </div>
+    </div>
+
+    <!-- Components Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <!-- Modals -->
+      <div class="card">
+        <h3 class="text-title mb-4">Modals & Dialogs</h3>
+        <p class="text-body-sm text-muted mb-6">
+          Accessible modal dialogs with backdrop blur, keyboard navigation (Escape to close), and focus trapping.
+        </p>
+        <div class="flex flex-wrap gap-2">
+          <button class="btn-primary" onclick="openModal('modal-sm')">Small Modal</button>
+          <button class="btn-secondary" onclick="openModal('modal-default')">Default Modal</button>
+          <button class="btn-ghost" onclick="openModal('modal-lg')">Large Modal</button>
+        </div>
+      </div>
+
+      <!-- Dropdowns -->
+      <div class="card">
+        <h3 class="text-title mb-4">Dropdown Menus</h3>
+        <p class="text-body-sm text-muted mb-6">
+          Context menus with dividers, icons, and keyboard navigation. Click outside or press Escape to close.
+        </p>
+        <div class="flex flex-wrap gap-2">
+          <div class="dropdown">
+            <button class="btn-primary" onclick="toggleDropdown('dropdown-1', event)">
+              Actions
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            <div id="dropdown-1" class="dropdown-menu hidden">
+              <div class="dropdown-label">Actions</div>
+              <div class="dropdown-item" onclick="closeAllDropdowns()">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                </svg>
+                Edit
+              </div>
+              <div class="dropdown-item" onclick="closeAllDropdowns()">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                </svg>
+                Duplicate
+              </div>
+              <div class="dropdown-divider"></div>
+              <div class="dropdown-label">Danger Zone</div>
+              <div class="dropdown-item danger" onclick="closeAllDropdowns(); showToast('error', 'Item deleted', 'This is a demo, nothing was deleted.')">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+                Delete
+              </div>
+            </div>
+          </div>
+
+          <div class="dropdown">
+            <button class="btn-secondary" onclick="toggleDropdown('dropdown-2', event)">
+              More Options
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+              </svg>
+            </button>
+            <div id="dropdown-2" class="dropdown-menu hidden">
+              <div class="dropdown-item" onclick="closeAllDropdowns()">Share</div>
+              <div class="dropdown-item" onclick="closeAllDropdowns()">Export</div>
+              <div class="dropdown-item" onclick="closeAllDropdowns()">Print</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Toast Notifications -->
+      <div class="card">
+        <h3 class="text-title mb-4">Toast Notifications</h3>
+        <p class="text-body-sm text-muted mb-6">
+          Temporary notification messages that appear in the top-right corner and auto-dismiss after 3 seconds.
+        </p>
+        <div class="flex flex-wrap gap-2">
+          <button class="btn-primary" onclick="showToast('success', 'Success!', 'Your changes have been saved.')">
+            Success Toast
+          </button>
+          <button class="btn-secondary" onclick="showToast('info', 'Info', 'Here is some information for you.')">
+            Info Toast
+          </button>
+          <button class="btn-ghost" onclick="showToast('warning', 'Warning', 'Please review your changes.')">
+            Warning Toast
+          </button>
+          <button class="btn-danger" onclick="showToast('error', 'Error', 'Something went wrong.')">
+            Error Toast
+          </button>
+        </div>
+      </div>
+
+      <!-- Command Palette -->
+      <div class="card">
+        <h3 class="text-title mb-4">Command Palette</h3>
+        <p class="text-body-sm text-muted mb-6">
+          Quick access to all actions. Press <span class="kbd">⌘K</span> or click the button to open.
+          Use arrow keys to navigate, Enter to select.
+        </p>
+        <div class="flex flex-wrap gap-2">
+          <button class="btn-primary" onclick="openCommandPalette()">
+            Open Command Palette
+            <span class="kbd">⌘K</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Loading States -->
+      <div class="card">
+        <h3 class="text-title mb-4">Loading States</h3>
+        <p class="text-body-sm text-muted mb-6">
+          Skeleton loaders and spinners for better perceived performance during data fetching.
+        </p>
+        <button class="btn-primary mb-4" onclick="toggleLoadingDemo()">
+          Toggle Loading Demo
+        </button>
+        <div id="loading-demo" class="space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="skeleton skeleton-avatar"></div>
+            <div class="flex-1 space-y-2">
+              <div class="skeleton skeleton-text w-2/3"></div>
+              <div class="skeleton skeleton-text w-1/2"></div>
+            </div>
+          </div>
+          <div class="space-y-2">
+            <div class="skeleton skeleton-title w-3/4"></div>
+            <div class="skeleton skeleton-text w-full"></div>
+            <div class="skeleton skeleton-text w-5/6"></div>
+          </div>
+        </div>
+        <div id="loading-content" class="hidden">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-full" style="background: linear-gradient(135deg, var(--brand-blue), var(--brand-purple));"></div>
+            <div class="flex-1">
+              <div class="text-title-lg">John Doe</div>
+              <div class="text-body-sm text-muted">Senior UI Designer</div>
+            </div>
+          </div>
+          <div>
+            <h4 class="text-title mb-2">About</h4>
+            <p class="text-body text-muted">
+              Passionate about creating beautiful and functional user interfaces.
+              10+ years of experience in product design and design systems.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabs Demo -->
+      <div class="card">
+        <h3 class="text-title mb-4">Tabbed Content</h3>
+        <p class="text-body-sm text-muted mb-6">
+          Organize content into tabs. Click on tabs to switch between views.
+        </p>
+        <div class="tabs mb-4">
+          <div class="tab active" onclick="switchTab('tab1', this)">Overview</div>
+          <div class="tab" onclick="switchTab('tab2', this)">Details</div>
+          <div class="tab" onclick="switchTab('tab3', this)">Settings</div>
+        </div>
+        <div id="tab1" class="tab-content">
+          <h4 class="text-title mb-2">Overview</h4>
+          <p class="text-body text-muted">This is the overview tab content. It shows a summary of the most important information.</p>
+        </div>
+        <div id="tab2" class="tab-content hidden">
+          <h4 class="text-title mb-2">Details</h4>
+          <p class="text-body text-muted">Detailed information goes here. You can add tables, lists, or any other components.</p>
+        </div>
+        <div id="tab3" class="tab-content hidden">
+          <h4 class="text-title mb-2">Settings</h4>
+          <p class="text-body text-muted">Configuration options and settings are displayed in this tab.</p>
+        </div>
+      </div>
+
+      <!-- Theme Switcher -->
+      <div class="card">
+        <h3 class="text-title mb-4">Theme Switcher</h3>
+        <p class="text-body-sm text-muted mb-6">
+          Switch between 8 different themes instantly. All components automatically adapt to the selected theme.
+        </p>
+        <div class="grid grid-cols-2 gap-2">
+          <button class="btn-secondary btn-sm" onclick="setTheme('')">Default</button>
+          <button class="btn-secondary btn-sm" onclick="setTheme('t-light')">Light</button>
+          <button class="btn-secondary btn-sm" onclick="setTheme('t-calm')">Calm</button>
+          <button class="btn-secondary btn-sm" onclick="setTheme('t-zen')">Zen</button>
+          <button class="btn-secondary btn-sm" onclick="setTheme('t-focus')">Focus</button>
+          <button class="btn-secondary btn-sm" onclick="setTheme('t-warm')">Warm</button>
+          <button class="btn-secondary btn-sm" onclick="setTheme('t-nord')">Nord</button>
+          <button class="btn-secondary btn-sm" onclick="setTheme('t-dark')">Dark</button>
+        </div>
+      </div>
+
+      <!-- Progress Demo -->
+      <div class="card">
+        <h3 class="text-title mb-4">Animated Progress</h3>
+        <p class="text-body-sm text-muted mb-6">
+          Watch the progress bars animate when you click the button.
+        </p>
+        <button class="btn-primary mb-4" onclick="animateProgress()">Simulate Progress</button>
+        <div class="space-y-4">
+          <div>
+            <div class="flex-between mb-2">
+              <span class="text-body-sm">Upload Progress</span>
+              <span class="text-body-sm text-muted" id="progress1-text">0%</span>
+            </div>
+            <div class="progress">
+              <div id="progress1" class="progress-bar progress-bar-success" style="width: 0%"></div>
+            </div>
+          </div>
+          <div>
+            <div class="flex-between mb-2">
+              <span class="text-body-sm">Processing</span>
+              <span class="text-body-sm text-muted" id="progress2-text">0%</span>
+            </div>
+            <div class="progress">
+              <div id="progress2" class="progress-bar" style="width: 0%"></div>
+            </div>
+          </div>
+          <div>
+            <div class="flex-between mb-2">
+              <span class="text-body-sm">Analyzing</span>
+              <span class="text-body-sm text-muted" id="progress3-text">0%</span>
+            </div>
+            <div class="progress">
+              <div id="progress3" class="progress-bar progress-bar-warning" style="width: 0%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Modals -->
+  <!-- Small Modal -->
+  <div id="modal-sm" class="modal-overlay hidden" onclick="closeModal('modal-sm')">
+    <div class="modal modal-sm fade-in" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <h3 class="modal-title">Confirm Action</h3>
+        <button class="btn-icon btn-icon-sm" onclick="closeModal('modal-sm')">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="text-body">Are you sure you want to perform this action? This cannot be undone.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" onclick="closeModal('modal-sm')">Cancel</button>
+        <button class="btn-danger" onclick="closeModal('modal-sm'); showToast('success', 'Confirmed', 'Action completed successfully.')">
+          Confirm
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Default Modal -->
+  <div id="modal-default" class="modal-overlay hidden" onclick="closeModal('modal-default')">
+    <div class="modal fade-in" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <h3 class="modal-title">Create New Project</h3>
+        <button class="btn-icon btn-icon-sm" onclick="closeModal('modal-default')">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="space-y-4">
+          <div>
+            <label class="field-label required">Project Name</label>
+            <input type="text" class="input" placeholder="My Awesome Project" />
+          </div>
+          <div>
+            <label class="field-label">Description</label>
+            <textarea class="input" rows="3" placeholder="Describe your project..."></textarea>
+          </div>
+          <div>
+            <label class="field-label">Template</label>
+            <select class="input select">
+              <option>Blank Project</option>
+              <option>Dashboard</option>
+              <option>Landing Page</option>
+              <option>E-commerce</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" onclick="closeModal('modal-default')">Cancel</button>
+        <button class="btn-primary" onclick="closeModal('modal-default'); showToast('success', 'Project Created', 'Your new project has been created.')">
+          Create Project
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Large Modal -->
+  <div id="modal-lg" class="modal-overlay hidden" onclick="closeModal('modal-lg')">
+    <div class="modal modal-lg fade-in" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <h3 class="modal-title">Advanced Settings</h3>
+        <button class="btn-icon btn-icon-sm" onclick="closeModal('modal-lg')">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="space-y-6">
+          <div>
+            <h4 class="text-title mb-3">General Settings</h4>
+            <div class="space-y-4">
+              <label class="flex items-center justify-between">
+                <div>
+                  <div class="text-body-sm font-medium">Enable Notifications</div>
+                  <div class="text-caption text-muted">Receive updates about your projects</div>
+                </div>
+                <div class="toggle checked"></div>
+              </label>
+              <label class="flex items-center justify-between">
+                <div>
+                  <div class="text-body-sm font-medium">Auto-save</div>
+                  <div class="text-caption text-muted">Automatically save your work</div>
+                </div>
+                <div class="toggle checked"></div>
+              </label>
+            </div>
+          </div>
+          <div class="divider-horizontal"></div>
+          <div>
+            <h4 class="text-title mb-3">Privacy</h4>
+            <div class="space-y-3">
+              <label class="flex items-center gap-2">
+                <input type="checkbox" class="checkbox" checked />
+                <span class="text-body-sm">Make profile public</span>
+              </label>
+              <label class="flex items-center gap-2">
+                <input type="checkbox" class="checkbox" />
+                <span class="text-body-sm">Show email address</span>
+              </label>
+              <label class="flex items-center gap-2">
+                <input type="checkbox" class="checkbox" checked />
+                <span class="text-body-sm">Allow search engines to index</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" onclick="closeModal('modal-lg')">Cancel</button>
+        <button class="btn-primary" onclick="closeModal('modal-lg'); showToast('success', 'Saved', 'Your settings have been saved.')">
+          Save Changes
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Command Palette -->
+  <div id="command-palette-overlay" class="modal-overlay hidden" onclick="closeCommandPalette()">
+    <div class="command-palette fade-in" onclick="event.stopPropagation()">
+      <input
+        id="command-input"
+        type="text"
+        class="command-input"
+        placeholder="Type a command or search..."
+        onkeyup="filterCommands(event)"
+      />
+      <div class="command-results" id="command-results">
+        <div class="command-item selected" onclick="executeCommand('new-project')">
+          <svg class="command-item-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+          </svg>
+          <div class="command-item-content">
+            <div class="command-item-title">New Project</div>
+            <div class="command-item-subtitle">Create a new project</div>
+          </div>
+          <span class="kbd command-item-kbd">⌘N</span>
+        </div>
+        <div class="command-item" onclick="executeCommand('open-file')">
+          <svg class="command-item-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+          </svg>
+          <div class="command-item-content">
+            <div class="command-item-title">Open File</div>
+            <div class="command-item-subtitle">Browse and open files</div>
+          </div>
+          <span class="kbd command-item-kbd">⌘O</span>
+        </div>
+        <div class="command-item" onclick="executeCommand('save')">
+          <svg class="command-item-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+          </svg>
+          <div class="command-item-content">
+            <div class="command-item-title">Save</div>
+            <div class="command-item-subtitle">Save current changes</div>
+          </div>
+          <span class="kbd command-item-kbd">⌘S</span>
+        </div>
+        <div class="command-item" onclick="executeCommand('settings')">
+          <svg class="command-item-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+          <div class="command-item-content">
+            <div class="command-item-title">Settings</div>
+            <div class="command-item-subtitle">Open preferences</div>
+          </div>
+          <span class="kbd command-item-kbd">⌘,</span>
+        </div>
+        <div class="command-item" onclick="executeCommand('toggle-theme')">
+          <svg class="command-item-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+          </svg>
+          <div class="command-item-content">
+            <div class="command-item-title">Toggle Theme</div>
+            <div class="command-item-subtitle">Switch between light and dark</div>
+          </div>
+          <span class="kbd command-item-kbd">⌘⇧T</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Modal functions
+    function openModal(id) {
+      const modal = document.getElementById(id);
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal(id) {
+      const modal = document.getElementById(id);
+      modal.classList.add('hidden');
+      document.body.style.overflow = 'auto';
+    }
+
+    // Dropdown functions
+    function toggleDropdown(id, event) {
+      event.stopPropagation();
+      closeAllDropdowns();
+      const dropdown = document.getElementById(id);
+      dropdown.classList.toggle('hidden');
+    }
+
+    function closeAllDropdowns() {
+      document.querySelectorAll('.dropdown-menu').forEach(menu => {
+        menu.classList.add('hidden');
+      });
+    }
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', closeAllDropdowns);
+
+    // Toast functions
+    function showToast(type, title, message) {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = `toast toast-${type}`;
+
+      const icons = {
+        success: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />',
+        error: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />',
+        warning: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />',
+        info: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />'
+      };
+
+      toast.innerHTML = `
+        <svg class="toast-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          ${icons[type]}
+        </svg>
+        <div class="toast-content">
+          <div class="toast-title">${title}</div>
+          <div class="toast-message">${message}</div>
+        </div>
+        <button class="btn-icon btn-icon-sm" onclick="this.parentElement.remove()">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      `;
+
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.transition = 'all 200ms ease';
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(100%)';
+        setTimeout(() => toast.remove(), 200);
+      }, 3000);
+    }
+
+    // Command Palette
+    function openCommandPalette() {
+      document.getElementById('command-palette-overlay').classList.remove('hidden');
+      document.getElementById('command-input').focus();
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeCommandPalette() {
+      document.getElementById('command-palette-overlay').classList.add('hidden');
+      document.getElementById('command-input').value = '';
+      document.body.style.overflow = 'auto';
+      filterCommands();
+    }
+
+    function executeCommand(command) {
+      closeCommandPalette();
+      const actions = {
+        'new-project': () => openModal('modal-default'),
+        'open-file': () => showToast('info', 'Open File', 'File browser would open here.'),
+        'save': () => showToast('success', 'Saved', 'All changes have been saved.'),
+        'settings': () => openModal('modal-lg'),
+        'toggle-theme': () => toggleTheme()
+      };
+      if (actions[command]) actions[command]();
+    }
+
+    function filterCommands(event) {
+      const query = document.getElementById('command-input').value.toLowerCase();
+      const items = document.querySelectorAll('.command-item');
+      let firstVisible = null;
+
+      items.forEach(item => {
+        const text = item.textContent.toLowerCase();
+        if (text.includes(query)) {
+          item.style.display = 'flex';
+          if (!firstVisible) firstVisible = item;
+        } else {
+          item.style.display = 'none';
+        }
+        item.classList.remove('selected');
+      });
+
+      if (firstVisible) firstVisible.classList.add('selected');
+
+      // Handle keyboard navigation
+      if (event && (event.key === 'ArrowDown' || event.key === 'ArrowUp')) {
+        const visibleItems = Array.from(items).filter(item => item.style.display !== 'none');
+        const selectedIndex = visibleItems.findIndex(item => item.classList.contains('selected'));
+
+        if (event.key === 'ArrowDown' && selectedIndex < visibleItems.length - 1) {
+          visibleItems[selectedIndex].classList.remove('selected');
+          visibleItems[selectedIndex + 1].classList.add('selected');
+        } else if (event.key === 'ArrowUp' && selectedIndex > 0) {
+          visibleItems[selectedIndex].classList.remove('selected');
+          visibleItems[selectedIndex - 1].classList.add('selected');
+        }
+      } else if (event && event.key === 'Enter') {
+        const selected = document.querySelector('.command-item.selected');
+        if (selected) selected.click();
+      }
+    }
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        openCommandPalette();
+      }
+      if (e.key === 'Escape') {
+        closeCommandPalette();
+        closeAllDropdowns();
+        document.querySelectorAll('.modal-overlay').forEach(modal => {
+          modal.classList.add('hidden');
+          document.body.style.overflow = 'auto';
+        });
+      }
+    });
+
+    // Loading demo
+    function toggleLoadingDemo() {
+      const loading = document.getElementById('loading-demo');
+      const content = document.getElementById('loading-content');
+      loading.classList.toggle('hidden');
+      content.classList.toggle('hidden');
+    }
+
+    // Tab switching
+    function switchTab(tabId, element) {
+      // Remove active class from all tabs
+      element.parentElement.querySelectorAll('.tab').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      // Add active class to clicked tab
+      element.classList.add('active');
+
+      // Hide all tab contents
+      document.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.add('hidden');
+      });
+      // Show selected tab content
+      document.getElementById(tabId).classList.remove('hidden');
+    }
+
+    // Theme switching
+    let currentTheme = '';
+    function setTheme(theme) {
+      document.body.className = theme + ' antialiased';
+      currentTheme = theme;
+      showToast('success', 'Theme Changed', `Switched to ${theme || 'default'} theme.`);
+    }
+
+    function toggleTheme() {
+      const themes = ['', 't-light', 't-dark', 't-calm', 't-zen', 't-focus', 't-warm', 't-nord'];
+      const currentIndex = themes.indexOf(currentTheme);
+      const nextIndex = (currentIndex + 1) % themes.length;
+      setTheme(themes[nextIndex]);
+    }
+
+    // Progress animation
+    function animateProgress() {
+      const progress1 = document.getElementById('progress1');
+      const progress2 = document.getElementById('progress2');
+      const progress3 = document.getElementById('progress3');
+      const text1 = document.getElementById('progress1-text');
+      const text2 = document.getElementById('progress2-text');
+      const text3 = document.getElementById('progress3-text');
+
+      let value1 = 0, value2 = 0, value3 = 0;
+
+      const interval = setInterval(() => {
+        if (value1 < 100) {
+          value1 += Math.random() * 10;
+          if (value1 > 100) value1 = 100;
+          progress1.style.width = value1 + '%';
+          text1.textContent = Math.round(value1) + '%';
+        }
+
+        if (value1 > 30 && value2 < 100) {
+          value2 += Math.random() * 8;
+          if (value2 > 100) value2 = 100;
+          progress2.style.width = value2 + '%';
+          text2.textContent = Math.round(value2) + '%';
+        }
+
+        if (value2 > 50 && value3 < 100) {
+          value3 += Math.random() * 12;
+          if (value3 > 100) value3 = 100;
+          progress3.style.width = value3 + '%';
+          text3.textContent = Math.round(value3) + '%';
+        }
+
+        if (value1 >= 100 && value2 >= 100 && value3 >= 100) {
+          clearInterval(interval);
+          showToast('success', 'Complete!', 'All tasks finished successfully.');
+        }
+      }, 200);
+    }
+
+    // Initialize toggles
+    document.querySelectorAll('.toggle').forEach(toggle => {
+      toggle.addEventListener('click', function() {
+        this.classList.toggle('checked');
+      });
+    });
+  </script>
+</body>
+</html>

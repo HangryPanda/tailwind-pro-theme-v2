@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tailwind Pro Theme — Root/Light/Dark Demo</title>
+    <!-- Expect Tailwind to be available in your app build -->
+    <link rel="stylesheet" href="./theme.css" />
+    <script>
+      // no-op; this page relies on your project's Tailwind build
+    </script>
+  </head>
+  <body class="p-6 md:p-10">
+    <h1 class="text-2xl font-bold mb-4">Theme Containers: Root / Light / Dark / Calming Variants</h1>
+    <p class="text-muted mb-6">Each panel below scopes CSS variables for its subtree. Calming themes reduce cognitive load with softer colors and lower contrast.</p>
+
+    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <!-- ROOT THEME (baseline) -->
+      <section class="theme-panel">
+        <h2 class="text-fg font-semibold mb-4">Root Theme</h2>
+        <div class="card space-y-4">
+          <p class="text-muted">Dark-first baseline using your provided mapping.</p>
+          <div class="flex gap-2">
+            <button class="btn-primary">Primary</button>
+            <button class="btn-muted">Muted</button>
+            <span class="kbd">⌘K</span>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="chip" style="background:#45A9F9;color:#111">Blue</span>
+            <span class="chip" style="background:#B084EB;color:#111">Purple</span>
+            <span class="chip" style="background:#19f9d8;color:#111">Green</span>
+            <span class="chip" style="background:#FF75B5;color:#111">Pink</span>
+            <span class="chip" style="background:#FFB86C;color:#111">Orange</span>
+            <span class="chip" style="background:#FF2C6D;color:#111">Red</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- LIGHT THEME -->
+      <section class="t-light theme-panel">
+        <h2 class="text-fg text-xl font-semibold mb-4">Light Theme (.t-light)</h2>
+        <div class="card space-y-4">
+          <p class="text-muted">Optimized light variant: crisp text & soft panels.</p>
+          <div class="flex gap-2">
+            <button class="btn-primary">Primary</button>
+            <button class="btn-muted">Muted</button>
+            <span class="kbd">⌘K</span>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="chip" style="background:#45A9F9;color:#111">Blue</span>
+            <span class="chip" style="background:#B084EB;color:#111">Purple</span>
+            <span class="chip" style="background:#19f9d8;color:#111">Green</span>
+            <span class="chip" style="background:#FF75B5;color:#111">Pink</span>
+            <span class="chip" style="background:#FFB86C;color:#111">Orange</span>
+            <span class="chip" style="background:#FF2C6D;color:#111">Red</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- DARK THEME -->
+      <section class="t-dark theme-panel">
+        <h2 class="text-fg text-xl font-semibold mb-4">Dark Theme (.t-dark)</h2>
+        <div class="card space-y-4">
+          <p class="text-muted">Explicit dark mapping (same as baseline).</p>
+          <div class="flex gap-2">
+            <button class="btn-primary">Primary</button>
+            <button class="btn-muted">Muted</button>
+            <span class="kbd">⌘K</span>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="chip" style="background:#45A9F9;color:#111">Blue</span>
+            <span class="chip" style="background:#B084EB;color:#111">Purple</span>
+            <span class="chip" style="background:#19f9d8;color:#111">Green</span>
+            <span class="chip" style="background:#FF75B5;color:#111">Pink</span>
+            <span class="chip" style="background:#FFB86C;color:#111">Orange</span>
+            <span class="chip" style="background:#FF2C6D;color:#111">Red</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- CALM THEME -->
+      <section class="t-calm theme-panel">
+        <h2 class="text-fg text-xl font-semibold mb-4">Calm Theme (.t-calm)</h2>
+        <div class="card space-y-4">
+          <p class="text-muted">Softer blues & greens for reduced eye strain. Perfect for long work sessions.</p>
+          <div class="flex gap-2">
+            <button class="btn-primary">Primary</button>
+            <button class="btn-muted">Muted</button>
+            <span class="kbd">⌘K</span>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="chip" style="background:var(--brand-blue);color:#111">Blue</span>
+            <span class="chip" style="background:var(--brand-purple);color:#111">Purple</span>
+            <span class="chip" style="background:var(--brand-green);color:#111">Green</span>
+            <span class="chip" style="background:var(--brand-pink);color:#111">Pink</span>
+            <span class="chip" style="background:var(--brand-orange);color:#111">Orange</span>
+            <span class="chip" style="background:var(--brand-red);color:#111">Red</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ZEN THEME -->
+      <section class="t-zen theme-panel">
+        <h2 class="text-fg text-xl font-semibold mb-4">Zen Theme (.t-zen)</h2>
+        <div class="card space-y-4">
+          <p class="text-muted">Earth tones & greens for a calming, natural feel. Reduces cognitive load.</p>
+          <div class="flex gap-2">
+            <button class="btn-primary">Primary</button>
+            <button class="btn-muted">Muted</button>
+            <span class="kbd">⌘K</span>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="chip" style="background:var(--brand-blue);color:#111">Blue</span>
+            <span class="chip" style="background:var(--brand-purple);color:#111">Purple</span>
+            <span class="chip" style="background:var(--brand-green);color:#111">Green</span>
+            <span class="chip" style="background:var(--brand-pink);color:#111">Pink</span>
+            <span class="chip" style="background:var(--brand-orange);color:#111">Orange</span>
+            <span class="chip" style="background:var(--brand-red);color:#111">Red</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- FOCUS THEME -->
+      <section class="t-focus theme-panel">
+        <h2 class="text-fg text-xl font-semibold mb-4">Focus Theme (.t-focus)</h2>
+        <div class="card space-y-4">
+          <p class="text-muted">Deep contrast with minimal color for maximum concentration. One primary accent.</p>
+          <div class="flex gap-2">
+            <button class="btn-primary">Primary</button>
+            <button class="btn-muted">Muted</button>
+            <span class="kbd">⌘K</span>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="chip" style="background:var(--brand-blue);color:#111">Blue</span>
+            <span class="chip" style="background:var(--brand-purple);color:#111">Purple</span>
+            <span class="chip" style="background:var(--brand-green);color:#111">Green</span>
+            <span class="chip" style="background:var(--brand-pink);color:#111">Pink</span>
+            <span class="chip" style="background:var(--brand-orange);color:#111">Orange</span>
+            <span class="chip" style="background:var(--brand-red);color:#111">Red</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- WARM THEME -->
+      <section class="t-warm theme-panel">
+        <h2 class="text-fg text-xl font-semibold mb-4">Warm Theme (.t-warm)</h2>
+        <div class="card space-y-4">
+          <p class="text-muted">Cozy amber tones for evening work. Reduces blue light exposure.</p>
+          <div class="flex gap-2">
+            <button class="btn-primary">Primary</button>
+            <button class="btn-muted">Muted</button>
+            <span class="kbd">⌘K</span>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="chip" style="background:var(--brand-blue);color:#111">Blue</span>
+            <span class="chip" style="background:var(--brand-purple);color:#111">Purple</span>
+            <span class="chip" style="background:var(--brand-green);color:#111">Green</span>
+            <span class="chip" style="background:var(--brand-pink);color:#111">Pink</span>
+            <span class="chip" style="background:var(--brand-orange);color:#111">Orange</span>
+            <span class="chip" style="background:var(--brand-red);color:#111">Red</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- NORD THEME -->
+      <section class="t-nord theme-panel">
+        <h2 class="text-fg text-xl font-semibold mb-4">Nord Theme (.t-nord)</h2>
+        <div class="card space-y-4">
+          <p class="text-muted">Cool, professional colors inspired by Nordic design. Low visual fatigue.</p>
+          <div class="flex gap-2">
+            <button class="btn-primary">Primary</button>
+            <button class="btn-muted">Muted</button>
+            <span class="kbd">⌘K</span>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="chip" style="background:var(--brand-blue);color:#111">Blue</span>
+            <span class="chip" style="background:var(--brand-purple);color:#111">Purple</span>
+            <span class="chip" style="background:var(--brand-green);color:#111">Green</span>
+            <span class="chip" style="background:var(--brand-pink);color:#111">Pink</span>
+            <span class="chip" style="background:var(--brand-orange);color:#111">Orange</span>
+            <span class="chip" style="background:var(--brand-red);color:#111">Red</span>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <hr class="my-10 border-[color:var(--border)]" />
+
+    <div class="space-y-6">
+      <div>
+        <h2 class="text-xl font-semibold mb-4">Theme Selection Guide</h2>
+        <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          <div class="card">
+            <h3 class="font-semibold mb-2">🌙 Root / Dark / Light</h3>
+            <p class="text-muted text-sm">Standard themes for general use. High contrast, vibrant colors.</p>
+          </div>
+          <div class="card">
+            <h3 class="font-semibold mb-2">🌊 Calm</h3>
+            <p class="text-muted text-sm">Long work sessions. Reduces eye strain with softer blues.</p>
+          </div>
+          <div class="card">
+            <h3 class="font-semibold mb-2">🍃 Zen</h3>
+            <p class="text-muted text-sm">Natural, grounded feel. Earth tones minimize stress.</p>
+          </div>
+          <div class="card">
+            <h3 class="font-semibold mb-2">🎯 Focus</h3>
+            <p class="text-muted text-sm">Deep work. Minimal color distractions, one primary accent.</p>
+          </div>
+          <div class="card">
+            <h3 class="font-semibold mb-2">🔥 Warm</h3>
+            <p class="text-muted text-sm">Evening work. Amber tones reduce blue light.</p>
+          </div>
+          <div class="card">
+            <h3 class="font-semibold mb-2">❄️ Nord</h3>
+            <p class="text-muted text-sm">Professional look. Cool colors, low visual fatigue.</p>
+          </div>
+        </div>
+      </div>
+
+      <p class="text-muted">Tip: You can theme any subtree by wrapping it with <code>.t-light</code>, <code>.t-calm</code>, <code>.t-zen</code>, <code>.t-focus</code>, <code>.t-warm</code>, or <code>.t-nord</code>. All themes support the same components.</p>
+    </div>
+  </body>
+</html>

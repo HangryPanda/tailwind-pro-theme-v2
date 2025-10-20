@@ -1,0 +1,1000 @@
+/* theme.css — root/light/dark variable sets + demo utilities */
+
+/* Reset and base styles */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  line-height: inherit;
+}
+
+button, input, optgroup, select, textarea {
+  font-family: inherit;
+  font-size: 100%;
+  line-height: inherit;
+  color: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+button, select {
+  text-transform: none;
+}
+
+button, [type='button'], [type='reset'], [type='submit'] {
+  -webkit-appearance: button;
+  background-color: transparent;
+  background-image: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+table {
+  text-indent: 0;
+  border-color: inherit;
+  border-collapse: collapse;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+img, svg, video, canvas, audio, iframe, embed, object {
+  display: block;
+  vertical-align: middle;
+}
+
+img, video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ==========================================================================
+   THEME TOKENS (CSS variables)
+   --------------------------------------------------------------------------
+   We provide three variable scopes:
+   - :root  (baseline)
+   - .t-light (light variant)
+   - .t-dark  (dark variant)
+   Apply .t-light or .t-dark to any container to theme its subtree.
+   ========================================================================== */
+
+@layer base {
+  :root {
+    /* Baseline (Root) — maps to your dark-first reference */
+    --bg-app: #242526;        /* _background-dark */
+    --bg-section: #292A2B;    /* _background-light */
+    --fg-default: #E6E6E6;    /* _foreground */
+    --fg-muted: #FFFFFF;      /* _contrast-gray */
+    --border: #222223;        /* _charcoal */
+    --ring: #45A9F9;          /* _blue */
+
+    --brand-blue: #45A9F9;
+    --brand-purple: #B084EB;
+    --brand-green: #19f9d8;
+    --brand-pink: #FF75B5;
+    --brand-orange: #FFB86C;
+    --brand-red: #FF2C6D;
+
+    /* diff/merge */
+    --diff-green: #19f9d866;
+    --diff-red: #FF4B8266;
+    --merge-current-header: #B084EB90;
+    --merge-current-content: #B084EB40;
+    --merge-incoming-header: #45A9F990;
+    --merge-incoming-content: #FFB86C40;
+  }
+
+  /* Light theme — uses your palette as a guide but optimizes contrast */
+  .t-light {
+    --bg-app: #FFFFFF;             /* very-light-gray-fade */
+    --bg-section: #F3F4F5;         /* soft panel contrast (derived from #E6E6E6) */
+    --fg-default: #2a2c2d;         /* very-dark-gray for text */
+    --fg-muted: #676B79;           /* light-midnight */
+    --border: #CDCDCD;             /* lighter gray as borders */
+    --ring: #45A9F9;               /* keep brand blue */
+  }
+
+  /* Dark theme — explicit mapping to your provided darks */
+  .t-dark {
+    --bg-app: #242526;             /* background-dark */
+    --bg-section: #292A2B;         /* background-light */
+    --fg-default: #E6E6E6;         /* very-light-gray */
+    --fg-muted: #BBBBBB;           /* contrast gray */
+    --border: #222223;             /* charcoal */
+    --ring: #45A9F9;
+  }
+
+  /* Calm theme — softer blues & greens for reduced cognitive load */
+  .t-calm {
+    --bg-app: #1a1d23;             /* deep blue-gray */
+    --bg-section: #20242b;         /* slightly lighter blue-gray */
+    --fg-default: #d4dae3;         /* soft blue-tinted white */
+    --fg-muted: #8b95a8;           /* muted blue-gray */
+    --border: #2a3140;             /* soft navy border */
+    --ring: #7eb3d9;               /* soft sky blue */
+
+    /* Calming color overrides */
+    --brand-blue: #7eb3d9;         /* softer blue */
+    --brand-purple: #9b8fc9;       /* lavender */
+    --brand-green: #7fc8b8;        /* soft teal */
+    --brand-pink: #d89ab8;         /* dusty rose */
+    --brand-orange: #d4a574;       /* warm sand */
+    --brand-red: #d47b8f;          /* muted rose */
+  }
+
+  /* Zen theme — ultra-minimal with greens & earth tones */
+  .t-zen {
+    --bg-app: #1c1f1a;             /* deep moss */
+    --bg-section: #232620;         /* soft charcoal-green */
+    --fg-default: #dce5d8;         /* soft sage white */
+    --fg-muted: #8a9685;           /* muted sage */
+    --border: #2d322a;             /* earth border */
+    --ring: #7fad7a;               /* soft green */
+
+    /* Zen color palette */
+    --brand-blue: #6b9fb5;         /* ocean blue */
+    --brand-purple: #9d8fae;       /* soft violet */
+    --brand-green: #7fad7a;        /* calm green */
+    --brand-pink: #c99ba8;         /* mauve */
+    --brand-orange: #c9a876;       /* clay */
+    --brand-red: #c57a7a;          /* terracotta */
+  }
+
+  /* Focus theme — deep contrast with one accent for concentration */
+  .t-focus {
+    --bg-app: #0f1114;             /* almost black */
+    --bg-section: #16181c;         /* very dark gray */
+    --fg-default: #c5cad3;         /* cool light gray */
+    --fg-muted: #6b727e;           /* muted gray */
+    --border: #1f2229;             /* subtle border */
+    --ring: #6b9ce8;               /* single blue accent */
+
+    /* Minimal color palette - less distraction */
+    --brand-blue: #6b9ce8;         /* primary accent */
+    --brand-purple: #7a7fa8;       /* desaturated purple */
+    --brand-green: #6b9c8e;        /* desaturated teal */
+    --brand-pink: #9c7a8e;         /* desaturated pink */
+    --brand-orange: #9c8e6b;       /* desaturated orange */
+    --brand-red: #9c6b7a;          /* desaturated red */
+  }
+
+  /* Warm theme — cozy amber tones for evening work */
+  .t-warm {
+    --bg-app: #1f1a16;             /* warm dark brown */
+    --bg-section: #252018;         /* chocolate brown */
+    --fg-default: #e8dfd4;         /* warm cream */
+    --fg-muted: #a89886;           /* warm gray */
+    --border: #2d261e;             /* coffee border */
+    --ring: #d9a96b;               /* warm gold */
+
+    /* Warm color palette */
+    --brand-blue: #7a9fc9;         /* warm blue */
+    --brand-purple: #b89fc9;       /* warm lavender */
+    --brand-green: #8fb89a;        /* warm mint */
+    --brand-pink: #d99fae;         /* warm pink */
+    --brand-orange: #d9a96b;       /* amber */
+    --brand-red: #d97a7a;          /* warm coral */
+  }
+
+  /* Nord-inspired — cool, professional, low-fatigue */
+  .t-nord {
+    --bg-app: #2e3440;             /* nord polar night */
+    --bg-section: #3b4252;         /* nord dark */
+    --fg-default: #eceff4;         /* nord snow */
+    --fg-muted: #d8dee9;           /* nord frost */
+    --border: #434c5e;             /* nord border */
+    --ring: #88c0d0;               /* nord frost blue */
+
+    /* Nord palette */
+    --brand-blue: #88c0d0;         /* nord frost */
+    --brand-purple: #b48ead;       /* nord aurora purple */
+    --brand-green: #a3be8c;        /* nord aurora green */
+    --brand-pink: #d08ca3;         /* custom nord pink */
+    --brand-orange: #d08770;       /* nord aurora orange */
+    --brand-red: #bf616a;          /* nord aurora red */
+  }
+
+  /* Apply baseline to html/body by default */
+  html, body {
+    @apply bg-[color:var(--bg-app)] text-[color:var(--fg-default)];
+  }
+}
+
+/* ==========================================================================
+   COMPONENTS
+   ========================================================================== */
+@layer components {
+  /* ==========================================================================
+     TYPOGRAPHY SYSTEM
+     ========================================================================== */
+  .text-display-lg { @apply text-5xl leading-tight font-bold; }
+  .text-display { @apply text-4xl leading-tight font-bold; }
+  .text-headline { @apply text-2xl leading-snug font-semibold; }
+  .text-title-lg { @apply text-xl leading-normal font-semibold; }
+  .text-title { @apply text-lg leading-normal font-semibold; }
+  .text-body-lg { @apply text-base leading-relaxed; }
+  .text-body { @apply text-sm leading-relaxed; }
+  .text-body-sm { @apply text-[0.8125rem] leading-relaxed; }
+  .text-caption { @apply text-xs leading-normal; }
+  .text-overline { @apply text-[0.6875rem] leading-snug font-semibold uppercase tracking-wide; }
+
+  /* Semantic text colors */
+  .text-success { color: var(--brand-green); }
+  .text-warning { color: var(--brand-orange); }
+  .text-error { color: var(--brand-red); }
+  .text-info { color: var(--brand-blue); }
+  .text-highlight { color: var(--brand-purple); }
+  .text-subtle { color: var(--fg-muted); opacity: 0.6; }
+  .text-disabled { color: var(--fg-muted); opacity: 0.4; }
+
+  /* ==========================================================================
+     LAYOUT & NAVIGATION
+     ========================================================================== */
+  .sidebar {
+    @apply w-60 flex flex-col overflow-y-auto border-r;
+    background: var(--bg-section);
+    border-color: var(--border);
+  }
+  .sidebar-compact { @apply w-16; }
+
+  .nav-item {
+    @apply flex items-center gap-3 px-3 py-2 rounded-lg cursor-pointer transition-all duration-150 relative;
+    color: var(--fg-muted);
+  }
+  .nav-item:hover {
+    background: color-mix(in oklab, var(--bg-section) 85%, var(--fg-default) 15%);
+    color: var(--fg-default);
+  }
+  .nav-item.active {
+    background: color-mix(in oklab, var(--brand-blue) 15%, transparent);
+    color: var(--brand-blue);
+    @apply font-medium;
+  }
+  .nav-item.active::before {
+    content: '';
+    @apply absolute left-0 w-[3px] h-full rounded-r;
+    background: var(--brand-blue);
+  }
+
+  .topbar {
+    @apply h-14 border-b flex items-center px-6 gap-4 sticky top-0 z-10;
+    background: var(--bg-app);
+    border-color: var(--border);
+  }
+
+  .breadcrumb {
+    @apply flex items-center gap-2 text-sm;
+  }
+  .breadcrumb-item {
+    @apply flex items-center gap-2;
+    color: var(--fg-muted);
+  }
+  .breadcrumb-item:hover { color: var(--fg-default); }
+  .breadcrumb-item.active {
+    color: var(--fg-default);
+    @apply font-medium;
+  }
+  .breadcrumb-separator { @apply opacity-40; }
+
+  /* ==========================================================================
+     CARDS
+     ========================================================================== */
+  .card {
+    @apply rounded-xl border p-4 shadow-sm;
+    background-color: var(--bg-section);
+    border-color: var(--border);
+  }
+
+  /* ==========================================================================
+     BUTTONS
+     ========================================================================== */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 font-medium text-sm text-[#111] transition-all duration-150 cursor-pointer border-0;
+    background-color: var(--brand-blue);
+  }
+  .btn-primary:hover { filter: brightness(1.1); }
+  .btn-primary:active { transform: translateY(1px); }
+  .btn-primary:disabled {
+    @apply opacity-50 cursor-not-allowed pointer-events-none;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 font-medium text-sm border transition-all duration-150 cursor-pointer;
+    background: transparent;
+    color: var(--fg-default);
+    border-color: var(--border);
+  }
+  .btn-secondary:hover {
+    background: color-mix(in oklab, var(--bg-section) 92%, var(--fg-default) 8%);
+    border-color: color-mix(in oklab, var(--border) 70%, var(--fg-default) 30%);
+  }
+
+  .btn-danger {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 font-medium text-sm text-white transition-all duration-150 cursor-pointer border-0;
+    background: var(--brand-red);
+  }
+  .btn-danger:hover { filter: brightness(1.1); }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-md px-3 py-2 font-medium text-sm transition-all duration-150 cursor-pointer border-0;
+    background: transparent;
+    color: var(--fg-muted);
+  }
+  .btn-ghost:hover {
+    background: color-mix(in oklab, var(--bg-section) 85%, var(--fg-default) 15%);
+    color: var(--fg-default);
+  }
+
+  .btn-icon {
+    @apply inline-flex items-center justify-center w-8 h-8 rounded-md transition-all duration-150 cursor-pointer border-0;
+    background: transparent;
+    color: var(--fg-muted);
+  }
+  .btn-icon:hover {
+    background: color-mix(in oklab, var(--bg-section) 85%, var(--fg-default) 15%);
+    color: var(--fg-default);
+  }
+  .btn-icon-sm { @apply w-7 h-7; }
+  .btn-icon-lg { @apply w-10 h-10; }
+
+  .btn-sm { @apply px-3 py-1.5 text-[0.8125rem]; }
+  .btn-lg { @apply px-5 py-2.5 text-base; }
+
+  /* ==========================================================================
+     FORM COMPONENTS
+     ========================================================================== */
+  .input {
+    @apply w-full px-3 py-2 rounded-lg border text-sm transition-all duration-150;
+    background: var(--bg-section);
+    color: var(--fg-default);
+    border-color: var(--border);
+  }
+  .input:hover {
+    border-color: color-mix(in oklab, var(--border) 70%, var(--fg-default) 30%);
+  }
+  .input:focus {
+    @apply outline-none;
+    border-color: var(--brand-blue);
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--brand-blue) 15%, transparent);
+  }
+  .input:disabled {
+    @apply opacity-50 cursor-not-allowed;
+    background: color-mix(in oklab, var(--bg-section) 90%, var(--border) 10%);
+  }
+  .input.error {
+    border-color: var(--brand-red);
+  }
+  .input.error:focus {
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--brand-red) 15%, transparent);
+  }
+  .input-sm { @apply px-2.5 py-1.5 text-[0.8125rem]; }
+  .input-lg { @apply px-4 py-2.5 text-base; }
+
+  .select {
+    @apply appearance-none;
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23BBBBBB' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    padding-right: 2.5rem;
+  }
+
+  .checkbox, .radio {
+    @apply w-[1.125rem] h-[1.125rem] cursor-pointer transition-all duration-150;
+    border: 1.5px solid var(--border);
+    background: var(--bg-section);
+  }
+  .checkbox { @apply rounded; }
+  .radio { @apply rounded-full; }
+  .checkbox:checked, .radio:checked {
+    background: var(--brand-blue);
+    border-color: var(--brand-blue);
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='10' viewBox='0 0 12 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 5L4.5 8.5L11 1' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  .toggle {
+    @apply relative w-11 h-6 rounded-full cursor-pointer transition-all duration-200;
+    background: color-mix(in oklab, var(--border) 80%, transparent);
+  }
+  .toggle::after {
+    content: '';
+    @apply absolute top-0.5 left-0.5 w-5 h-5 rounded-full transition-transform duration-200;
+    background: var(--fg-default);
+  }
+  .toggle.checked {
+    background: var(--brand-blue);
+  }
+  .toggle.checked::after {
+    transform: translateX(1.25rem);
+  }
+
+  .search-input {
+    @apply pl-10;
+    background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 12C9.76142 12 12 9.76142 12 7C12 4.23858 9.76142 2 7 2C4.23858 2 2 4.23858 2 7C2 9.76142 4.23858 12 7 12Z' stroke='%23BBBBBB' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M14 14L10.5 10.5' stroke='%23BBBBBB' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: 0.75rem center;
+  }
+
+  .field-label {
+    @apply block text-[0.8125rem] font-medium mb-1.5;
+    color: var(--fg-default);
+  }
+  .field-label.required::after {
+    content: '*';
+    @apply ml-1;
+    color: var(--brand-red);
+  }
+  .field-hint {
+    @apply text-xs mt-1;
+    color: var(--fg-muted);
+  }
+  .field-error {
+    @apply text-xs mt-1 flex items-center gap-1;
+    color: var(--brand-red);
+  }
+
+  /* ==========================================================================
+     TABLES
+     ========================================================================== */
+  .table-container {
+    @apply border rounded-xl overflow-hidden;
+    background: var(--bg-section);
+    border-color: var(--border);
+  }
+  .table {
+    @apply w-full border-collapse text-sm;
+  }
+  .table thead {
+    background: color-mix(in oklab, var(--bg-section) 90%, var(--border) 10%);
+    border-bottom: 1px solid var(--border);
+  }
+  .table th {
+    @apply px-4 py-3 text-left font-semibold text-xs uppercase tracking-wide;
+    color: var(--fg-muted);
+  }
+  .table td {
+    @apply px-4 py-3.5 border-t;
+    color: var(--fg-default);
+    border-color: var(--border);
+  }
+  .table tbody tr {
+    @apply transition-all duration-100;
+  }
+  .table tbody tr:hover {
+    background: color-mix(in oklab, var(--bg-section) 92%, var(--fg-default) 8%);
+  }
+  .table tbody tr.selected {
+    background: color-mix(in oklab, var(--brand-blue) 10%, transparent);
+  }
+  .table-sm td { @apply px-3 py-2; }
+  .table-sm th { @apply px-3 py-2; }
+
+  .table-sortable {
+    @apply cursor-pointer select-none flex items-center gap-2;
+  }
+  .table-sortable:hover { color: var(--fg-default); }
+
+  /* ==========================================================================
+     LISTS
+     ========================================================================== */
+  .list-group {
+    @apply border rounded-xl overflow-hidden;
+    background: var(--bg-section);
+    border-color: var(--border);
+  }
+  .list-item {
+    @apply px-4 py-3.5 border-t flex items-center gap-3 transition-all duration-100 cursor-pointer;
+    border-color: var(--border);
+  }
+  .list-item:first-child { @apply border-t-0; }
+  .list-item:hover {
+    background: color-mix(in oklab, var(--bg-section) 92%, var(--fg-default) 8%);
+  }
+  .list-item.active {
+    background: color-mix(in oklab, var(--brand-blue) 10%, transparent);
+  }
+  .list-item-content {
+    @apply flex-1 min-w-0;
+  }
+  .list-item-title {
+    @apply font-medium mb-0.5;
+    color: var(--fg-default);
+  }
+  .list-item-meta {
+    @apply text-xs;
+    color: var(--fg-muted);
+  }
+
+  /* ==========================================================================
+     EMPTY STATES
+     ========================================================================== */
+  .empty-state {
+    @apply text-center py-12 px-6;
+    color: var(--fg-muted);
+  }
+  .empty-state-icon {
+    @apply w-12 h-12 mx-auto mb-4 opacity-50;
+  }
+  .empty-state-title {
+    @apply text-base font-semibold mb-2;
+    color: var(--fg-default);
+  }
+  .empty-state-description {
+    @apply text-sm mb-6;
+  }
+
+  /* ==========================================================================
+     DROPDOWNS
+     ========================================================================== */
+  .dropdown {
+    @apply relative inline-block;
+  }
+  .dropdown-menu {
+    @apply absolute top-full right-0 mt-2 min-w-[12rem] rounded-lg border p-1.5 z-50;
+    background: var(--bg-section);
+    border-color: var(--border);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  }
+  .dropdown-item {
+    @apply flex items-center gap-2.5 px-3 py-2 rounded-md text-sm cursor-pointer transition-all duration-100;
+    color: var(--fg-default);
+  }
+  .dropdown-item:hover {
+    background: color-mix(in oklab, var(--bg-section) 85%, var(--fg-default) 15%);
+  }
+  .dropdown-item.danger { color: var(--brand-red); }
+  .dropdown-item.danger:hover {
+    background: color-mix(in oklab, var(--brand-red) 10%, transparent);
+  }
+  .dropdown-divider {
+    @apply h-px my-1.5;
+    background: var(--border);
+  }
+  .dropdown-label {
+    @apply px-3 py-1.5 text-[0.6875rem] uppercase tracking-wide font-semibold;
+    color: var(--fg-muted);
+  }
+
+  /* ==========================================================================
+     TABS
+     ========================================================================== */
+  .tabs {
+    @apply flex gap-0.5 border-b;
+    border-color: var(--border);
+  }
+  .tab {
+    @apply px-4 py-2.5 text-sm font-medium border-b-2 border-transparent cursor-pointer transition-all duration-150 relative top-px;
+    color: var(--fg-muted);
+  }
+  .tab:hover { color: var(--fg-default); }
+  .tab.active {
+    color: var(--brand-blue);
+    border-color: var(--brand-blue);
+  }
+
+  .tabs-pills {
+    @apply flex gap-1.5 p-1 rounded-lg;
+    background: color-mix(in oklab, var(--bg-section) 90%, var(--border) 10%);
+  }
+  .tab-pill {
+    @apply px-3 py-1.5 text-[0.8125rem] font-medium rounded-md cursor-pointer transition-all duration-150;
+    color: var(--fg-muted);
+  }
+  .tab-pill:hover { color: var(--fg-default); }
+  .tab-pill.active {
+    background: var(--bg-section);
+    color: var(--fg-default);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  }
+
+  /* ==========================================================================
+     MODALS
+     ========================================================================== */
+  .modal-overlay {
+    @apply fixed inset-0 flex items-center justify-center p-4 z-[100];
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+  }
+  .modal {
+    @apply rounded-xl border max-w-2xl w-full max-h-[90vh] overflow-hidden flex flex-col;
+    background: var(--bg-section);
+    border-color: var(--border);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  }
+  .modal-header {
+    @apply px-6 py-5 border-b flex items-center justify-between;
+    border-color: var(--border);
+  }
+  .modal-title {
+    @apply text-lg font-semibold;
+    color: var(--fg-default);
+  }
+  .modal-body {
+    @apply px-6 py-6 overflow-y-auto flex-1;
+  }
+  .modal-footer {
+    @apply px-6 py-4 border-t flex gap-3 justify-end;
+    border-color: var(--border);
+  }
+  .modal-sm { @apply max-w-md; }
+  .modal-lg { @apply max-w-3xl; }
+  .modal-xl { @apply max-w-4xl; }
+  .modal-full { @apply max-w-[95vw] max-h-[95vh]; }
+
+  /* ==========================================================================
+     COMMAND PALETTE
+     ========================================================================== */
+  .command-palette {
+    @apply rounded-xl border max-w-2xl w-full overflow-hidden;
+    background: var(--bg-section);
+    border-color: var(--border);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  }
+  .command-input {
+    @apply w-full px-6 py-4 border-b border-0 text-base;
+    background: transparent;
+    color: var(--fg-default);
+    border-color: var(--border);
+  }
+  .command-input:focus { @apply outline-none; }
+  .command-results {
+    @apply max-h-80 overflow-y-auto p-2;
+  }
+  .command-item {
+    @apply flex items-center gap-3 px-3.5 py-2.5 rounded-lg cursor-pointer transition-all duration-100;
+  }
+  .command-item:hover,
+  .command-item.selected {
+    background: color-mix(in oklab, var(--brand-blue) 15%, transparent);
+  }
+  .command-item-icon {
+    @apply w-5 h-5 opacity-70;
+  }
+  .command-item-content {
+    @apply flex-1 min-w-0;
+  }
+  .command-item-title {
+    @apply text-sm font-medium;
+    color: var(--fg-default);
+  }
+  .command-item-subtitle {
+    @apply text-xs;
+    color: var(--fg-muted);
+  }
+  .command-item-kbd {
+    @apply text-[0.6875rem] opacity-60;
+  }
+
+  /* ==========================================================================
+     TOASTS
+     ========================================================================== */
+  .toast-container {
+    @apply fixed top-4 right-4 z-[200] flex flex-col gap-3 max-w-sm;
+  }
+  .toast {
+    @apply rounded-lg border p-4 flex items-start gap-3;
+    background: var(--bg-section);
+    border-color: var(--border);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    animation: slideIn 200ms ease;
+  }
+  @keyframes slideIn {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  .toast-icon {
+    @apply w-5 h-5 flex-shrink-0;
+  }
+  .toast-content {
+    @apply flex-1 min-w-0;
+  }
+  .toast-title {
+    @apply font-semibold text-sm mb-0.5;
+    color: var(--fg-default);
+  }
+  .toast-message {
+    @apply text-[0.8125rem];
+    color: var(--fg-muted);
+  }
+  .toast-success { border-left: 3px solid var(--brand-green); }
+  .toast-error { border-left: 3px solid var(--brand-red); }
+  .toast-warning { border-left: 3px solid var(--brand-orange); }
+  .toast-info { border-left: 3px solid var(--brand-blue); }
+
+  /* ==========================================================================
+     ALERTS
+     ========================================================================== */
+  .alert {
+    @apply px-4 py-3.5 rounded-lg flex items-start gap-3 text-sm;
+  }
+  .alert-icon {
+    @apply w-[1.125rem] h-[1.125rem] flex-shrink-0;
+  }
+  .alert-content {
+    @apply flex-1 min-w-0;
+  }
+  .alert-title {
+    @apply font-semibold mb-1;
+  }
+  .alert-info {
+    background: color-mix(in oklab, var(--brand-blue) 10%, transparent);
+    border: 1px solid color-mix(in oklab, var(--brand-blue) 30%, transparent);
+    color: var(--fg-default);
+  }
+  .alert-success {
+    background: color-mix(in oklab, var(--brand-green) 10%, transparent);
+    border: 1px solid color-mix(in oklab, var(--brand-green) 30%, transparent);
+    color: var(--fg-default);
+  }
+  .alert-warning {
+    background: color-mix(in oklab, var(--brand-orange) 10%, transparent);
+    border: 1px solid color-mix(in oklab, var(--brand-orange) 30%, transparent);
+    color: var(--fg-default);
+  }
+  .alert-error {
+    background: color-mix(in oklab, var(--brand-red) 10%, transparent);
+    border: 1px solid color-mix(in oklab, var(--brand-red) 30%, transparent);
+    color: var(--fg-default);
+  }
+
+  /* ==========================================================================
+     TOOLTIPS
+     ========================================================================== */
+  .tooltip {
+    @apply absolute rounded-md px-2.5 py-1.5 text-xs z-[150] pointer-events-none max-w-xs;
+    background: color-mix(in oklab, var(--bg-app) 95%, transparent);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border);
+    color: var(--fg-default);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  /* ==========================================================================
+     LOADING STATES
+     ========================================================================== */
+  .skeleton {
+    @apply rounded;
+    background: linear-gradient(
+      90deg,
+      color-mix(in oklab, var(--bg-section) 90%, var(--fg-default) 10%) 25%,
+      color-mix(in oklab, var(--bg-section) 95%, var(--fg-default) 5%) 50%,
+      color-mix(in oklab, var(--bg-section) 90%, var(--fg-default) 10%) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+  .skeleton-text { @apply h-3.5; }
+  .skeleton-title { @apply h-5; }
+  .skeleton-button { @apply h-10; }
+  .skeleton-avatar { @apply w-10 h-10 rounded-full; }
+
+  .spinner {
+    @apply w-5 h-5 rounded-full;
+    border: 2px solid color-mix(in oklab, var(--brand-blue) 30%, transparent);
+    border-top-color: var(--brand-blue);
+    animation: spin 600ms linear infinite;
+  }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  .spinner-sm { @apply w-4 h-4 border-2; }
+  .spinner-lg { @apply w-8 h-8 border-[3px]; }
+
+  /* ==========================================================================
+     BADGES
+     ========================================================================== */
+  .badge {
+    @apply inline-flex items-center px-2 py-0.5 rounded-full text-[0.6875rem] font-semibold uppercase tracking-wide;
+  }
+  .badge-primary {
+    background: color-mix(in oklab, var(--brand-blue) 20%, transparent);
+    color: var(--brand-blue);
+  }
+  .badge-success {
+    background: color-mix(in oklab, var(--brand-green) 20%, transparent);
+    color: var(--brand-green);
+  }
+  .badge-warning {
+    background: color-mix(in oklab, var(--brand-orange) 20%, transparent);
+    color: var(--brand-orange);
+  }
+  .badge-error {
+    background: color-mix(in oklab, var(--brand-red) 20%, transparent);
+    color: var(--brand-red);
+  }
+  .badge-neutral {
+    background: color-mix(in oklab, var(--fg-muted) 15%, transparent);
+    color: var(--fg-muted);
+  }
+
+  .badge-dot {
+    @apply inline-flex items-center gap-1.5 text-[0.8125rem];
+  }
+  .badge-dot::before {
+    content: '';
+    @apply w-2 h-2 rounded-full;
+    background: currentColor;
+  }
+
+  /* ==========================================================================
+     STATUS INDICATORS
+     ========================================================================== */
+  .status-indicator {
+    @apply w-2 h-2 rounded-full inline-block;
+  }
+  .status-online { background: var(--brand-green); }
+  .status-offline { background: var(--fg-muted); opacity: 0.4; }
+  .status-busy { background: var(--brand-red); }
+  .status-away { background: var(--brand-orange); }
+  .status-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  /* ==========================================================================
+     PROGRESS
+     ========================================================================== */
+  .progress {
+    @apply h-2 rounded-full overflow-hidden;
+    background: color-mix(in oklab, var(--border) 50%, transparent);
+  }
+  .progress-bar {
+    @apply h-full rounded-full transition-all duration-300;
+    background: var(--brand-blue);
+  }
+  .progress-sm { @apply h-1; }
+  .progress-lg { @apply h-3; }
+  .progress-bar-success { background: var(--brand-green); }
+  .progress-bar-warning { background: var(--brand-orange); }
+  .progress-bar-error { background: var(--brand-red); }
+  .progress-bar-striped {
+    background-image: linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0.15) 25%,
+      transparent 25%,
+      transparent 50%,
+      rgba(255, 255, 255, 0.15) 50%,
+      rgba(255, 255, 255, 0.15) 75%,
+      transparent 75%,
+      transparent
+    );
+    background-size: 1rem 1rem;
+    animation: progress-stripes 1s linear infinite;
+  }
+  @keyframes progress-stripes {
+    0% { background-position: 1rem 0; }
+    100% { background-position: 0 0; }
+  }
+
+  /* ==========================================================================
+     CHIPS
+     ========================================================================== */
+  .chip {
+    @apply inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ring-1 ring-inset;
+    background: #373B41;
+    color: var(--fg-default);
+    border-color: var(--border);
+  }
+
+  /* ==========================================================================
+     KBD
+     ========================================================================== */
+  .kbd {
+    @apply rounded-md border px-1.5 py-0.5 text-xs font-mono;
+    background: var(--bg-section);
+    color: var(--fg-default);
+    border-color: var(--border);
+  }
+
+  /* ==========================================================================
+     UTILITIES
+     ========================================================================== */
+  .flex-between {
+    @apply flex items-center justify-between;
+  }
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+  .flex-start {
+    @apply flex items-center;
+  }
+  .truncate {
+    @apply overflow-hidden overflow-ellipsis whitespace-nowrap;
+  }
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    @apply overflow-hidden;
+  }
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    @apply overflow-hidden;
+  }
+  .divider-horizontal {
+    @apply h-px my-4;
+    background: var(--border);
+  }
+  .divider-vertical {
+    @apply w-px mx-4 self-stretch;
+    background: var(--border);
+  }
+
+  /* ==========================================================================
+     ACCESSIBILITY
+     ========================================================================== */
+  *:focus-visible {
+    @apply outline-2 outline-offset-2 rounded;
+    outline-color: var(--brand-blue);
+  }
+  .sr-only {
+    @apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0;
+    clip: rect(0, 0, 0, 0);
+  }
+
+  /* ==========================================================================
+     ANIMATIONS
+     ========================================================================== */
+  .transition-all { @apply transition-all duration-150; }
+  .transition-colors { @apply transition-colors duration-150; }
+  .transition-transform { @apply transition-transform duration-150; }
+  .hover-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  .hover-scale:hover {
+    transform: scale(1.02);
+  }
+  .active-press:active {
+    transform: scale(0.98);
+  }
+}
+
+/* ==========================================================================
+   UTILITIES
+   ========================================================================== */
+@layer utilities {
+  .bg-app { background-color: var(--bg-app); }
+  .bg-section { background-color: var(--bg-section); }
+  .text-fg { color: var(--fg-default); }
+  .text-muted { color: var(--fg-muted); }
+  .ring-primary { --tw-ring-color: var(--ring); }
+
+  /* Demo-only helper */
+  .theme-panel { @apply rounded-2xl border p-5; border-color: var(--border); background: var(--bg-app); }
+}

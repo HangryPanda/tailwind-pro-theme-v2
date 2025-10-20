@@ -1,0 +1,866 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ProTheme - Professional Design System Showcase</title>
+  <link rel="stylesheet" href="./theme.css" />
+  <style>
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 0.5rem;
+      height: 0.5rem;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: color-mix(in oklab, var(--border) 60%, transparent);
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: color-mix(in oklab, var(--border) 80%, transparent);
+    }
+
+    /* Hero gradient animation */
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .hero-gradient {
+      background: linear-gradient(
+        -45deg,
+        var(--brand-blue),
+        var(--brand-purple),
+        var(--brand-pink),
+        var(--brand-orange)
+      );
+      background-size: 400% 400%;
+      animation: gradient 15s ease infinite;
+    }
+
+    /* Glass morphism effect */
+    .glass {
+      background: color-mix(in oklab, var(--bg-section) 80%, transparent);
+      backdrop-filter: blur(20px);
+      border: 1px solid color-mix(in oklab, var(--border) 50%, transparent);
+    }
+
+    /* Feature grid */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    /* Component showcase grid */
+    .showcase-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .showcase-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body class="antialiased">
+  <!-- Navigation -->
+  <nav class="topbar backdrop-blur-md sticky top-0" style="background: color-mix(in oklab, var(--bg-app) 90%, transparent);">
+    <div class="flex-between w-full max-w-7xl mx-auto">
+      <div class="flex items-center gap-8">
+        <h1 class="text-title font-bold flex items-center gap-2">
+          <div class="w-8 h-8 rounded-lg hero-gradient"></div>
+          ProTheme
+        </h1>
+        <div class="hidden md:flex items-center gap-1">
+          <a href="#components" class="nav-item">Components</a>
+          <a href="#themes" class="nav-item">Themes</a>
+          <a href="#docs" class="nav-item">Documentation</a>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <button class="btn-ghost btn-sm">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+        </button>
+        <button class="btn-secondary btn-sm">View on GitHub</button>
+        <button class="btn-primary btn-sm">Get Started</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="relative overflow-hidden py-20 md:py-32">
+    <div class="absolute inset-0 hero-gradient opacity-10"></div>
+    <div class="relative max-w-7xl mx-auto px-6 text-center">
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-6">
+        <span class="status-indicator status-pulse" style="background: var(--brand-green);"></span>
+        <span class="text-caption">New: 100+ Components Added</span>
+      </div>
+      <h1 class="text-display-lg mb-6 max-w-4xl mx-auto">
+        A Complete Design System for
+        <span class="hero-gradient bg-clip-text text-transparent">Modern Web Apps</span>
+      </h1>
+      <p class="text-body-lg text-muted max-w-2xl mx-auto mb-10">
+        Built with production-grade components, 8 beautiful themes, and best-in-class accessibility.
+        Perfect for dashboards, SaaS platforms, and productivity tools.
+      </p>
+      <div class="flex flex-wrap items-center justify-center gap-4 mb-12">
+        <button class="btn-primary btn-lg">Explore Components</button>
+        <button class="btn-secondary btn-lg">View Documentation</button>
+      </div>
+
+      <!-- Feature Pills -->
+      <div class="flex flex-wrap items-center justify-center gap-3">
+        <span class="badge badge-primary">100+ Components</span>
+        <span class="badge badge-success">8 Themes</span>
+        <span class="badge badge-warning">Dark Mode</span>
+        <span class="badge badge-error">Fully Accessible</span>
+        <span class="badge badge-neutral">Tailwind CSS</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section class="py-12 border-y" style="border-color: var(--border); background: var(--bg-section);">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        <div>
+          <div class="text-display text-info mb-2">100+</div>
+          <div class="text-body text-muted">Components</div>
+        </div>
+        <div>
+          <div class="text-display text-success mb-2">8</div>
+          <div class="text-body text-muted">Themes</div>
+        </div>
+        <div>
+          <div class="text-display text-warning mb-2">WCAG AA</div>
+          <div class="text-body text-muted">Accessible</div>
+        </div>
+        <div>
+          <div class="text-display text-highlight mb-2">100%</div>
+          <div class="text-body text-muted">Customizable</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Component Showcase -->
+  <section id="components" class="py-20">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 class="text-display mb-4">Component Library</h2>
+        <p class="text-body-lg text-muted max-w-2xl mx-auto">
+          Every component you need to build modern, professional web applications.
+          Designed for consistency, accessibility, and developer experience.
+        </p>
+      </div>
+
+      <div class="showcase-grid">
+        <!-- Buttons Showcase -->
+        <div class="card hover-lift">
+          <div class="flex-between mb-4">
+            <h3 class="text-title">Buttons</h3>
+            <span class="badge badge-primary">Interactive</span>
+          </div>
+          <div class="space-y-4">
+            <div class="flex flex-wrap gap-2">
+              <button class="btn-primary">Primary</button>
+              <button class="btn-secondary">Secondary</button>
+              <button class="btn-danger">Danger</button>
+              <button class="btn-ghost">Ghost</button>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <button class="btn-primary btn-sm">Small</button>
+              <button class="btn-secondary">Default</button>
+              <button class="btn-primary btn-lg">Large</button>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <button class="btn-icon">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                </svg>
+              </button>
+              <button class="btn-icon-lg">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Forms Showcase -->
+        <div class="card hover-lift">
+          <div class="flex-between mb-4">
+            <h3 class="text-title">Form Controls</h3>
+            <span class="badge badge-success">Validated</span>
+          </div>
+          <div class="space-y-4">
+            <div>
+              <label class="field-label required">Email Address</label>
+              <input type="email" class="input" placeholder="you@example.com" />
+              <div class="field-hint">We'll never share your email.</div>
+            </div>
+            <div>
+              <label class="field-label">Search Templates</label>
+              <input type="search" class="input search-input" placeholder="Search..." />
+            </div>
+            <div class="flex items-center gap-6">
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" class="checkbox" checked />
+                <span class="text-body-sm">Remember me</span>
+              </label>
+              <label class="flex items-center gap-2 cursor-pointer">
+                <div class="toggle checked"></div>
+                <span class="text-body-sm">Notifications</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Alerts Showcase -->
+        <div class="card hover-lift">
+          <div class="flex-between mb-4">
+            <h3 class="text-title">Alerts & Feedback</h3>
+            <span class="badge badge-warning">Status</span>
+          </div>
+          <div class="space-y-3">
+            <div class="alert alert-success">
+              <svg class="alert-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <div class="alert-content">
+                <div class="alert-title">Success!</div>
+                Your changes have been saved.
+              </div>
+            </div>
+            <div class="alert alert-warning">
+              <svg class="alert-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+              <div class="alert-content">
+                Please review your information.
+              </div>
+            </div>
+            <div class="alert alert-error">
+              <svg class="alert-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <div class="alert-content">
+                An error occurred. Please try again.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Badges & Status -->
+        <div class="card hover-lift">
+          <div class="flex-between mb-4">
+            <h3 class="text-title">Badges & Status</h3>
+            <span class="badge badge-neutral">Labels</span>
+          </div>
+          <div class="space-y-4">
+            <div class="flex flex-wrap gap-2">
+              <span class="badge badge-primary">Primary</span>
+              <span class="badge badge-success">Success</span>
+              <span class="badge badge-warning">Warning</span>
+              <span class="badge badge-error">Error</span>
+            </div>
+            <div class="flex flex-wrap gap-3">
+              <span class="badge-dot text-success">
+                Online
+              </span>
+              <span class="badge-dot text-warning">
+                Away
+              </span>
+              <span class="badge-dot text-error">
+                Busy
+              </span>
+            </div>
+            <div class="flex items-center gap-4">
+              <div class="flex items-center gap-2">
+                <span class="status-indicator status-online"></span>
+                <span class="text-body-sm">Active</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="status-indicator status-pulse" style="background: var(--brand-green);"></span>
+                <span class="text-body-sm">Live</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tabs Showcase -->
+        <div class="card hover-lift">
+          <div class="flex-between mb-4">
+            <h3 class="text-title">Tabs & Navigation</h3>
+            <span class="badge badge-info">Interactive</span>
+          </div>
+          <div class="space-y-4">
+            <div class="tabs">
+              <div class="tab active">Overview</div>
+              <div class="tab">Activity</div>
+              <div class="tab">Settings</div>
+            </div>
+            <div class="tabs-pills">
+              <div class="tab-pill active">All</div>
+              <div class="tab-pill">Active</div>
+              <div class="tab-pill">Completed</div>
+              <div class="tab-pill">Draft</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Progress Showcase -->
+        <div class="card hover-lift">
+          <div class="flex-between mb-4">
+            <h3 class="text-title">Progress Indicators</h3>
+            <span class="badge badge-highlight">Loading</span>
+          </div>
+          <div class="space-y-4">
+            <div>
+              <div class="flex-between mb-2">
+                <span class="text-body-sm">Upload Progress</span>
+                <span class="text-body-sm text-muted">75%</span>
+              </div>
+              <div class="progress">
+                <div class="progress-bar progress-bar-success" style="width: 75%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex-between mb-2">
+                <span class="text-body-sm">Processing</span>
+                <span class="text-body-sm text-muted">40%</span>
+              </div>
+              <div class="progress">
+                <div class="progress-bar progress-bar-striped" style="width: 40%"></div>
+              </div>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="spinner"></div>
+              <div class="spinner spinner-lg"></div>
+              <span class="text-body-sm text-muted">Loading...</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Table Preview -->
+        <div class="card hover-lift">
+          <div class="flex-between mb-4">
+            <h3 class="text-title">Data Tables</h3>
+            <span class="badge badge-primary">Sortable</span>
+          </div>
+          <div class="table-container">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Status</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Project Alpha</td>
+                  <td><span class="badge badge-success">Active</span></td>
+                  <td class="text-muted">Oct 15</td>
+                </tr>
+                <tr class="selected">
+                  <td>Project Beta</td>
+                  <td><span class="badge badge-warning">Pending</span></td>
+                  <td class="text-muted">Oct 18</td>
+                </tr>
+                <tr>
+                  <td>Project Gamma</td>
+                  <td><span class="badge badge-error">Blocked</span></td>
+                  <td class="text-muted">Oct 19</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- List Group -->
+        <div class="card hover-lift">
+          <div class="flex-between mb-4">
+            <h3 class="text-title">List Groups</h3>
+            <span class="badge badge-success">Selectable</span>
+          </div>
+          <div class="list-group">
+            <div class="list-item active">
+              <div class="w-10 h-10 rounded-full hero-gradient"></div>
+              <div class="list-item-content">
+                <div class="list-item-title">Design System Update</div>
+                <div class="list-item-meta">Updated 2 hours ago</div>
+              </div>
+              <svg class="w-5 h-5 text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </div>
+            <div class="list-item">
+              <div class="w-10 h-10 rounded-full" style="background: var(--brand-purple);"></div>
+              <div class="list-item-content">
+                <div class="list-item-title">New Components Added</div>
+                <div class="list-item-meta">Updated 5 hours ago</div>
+              </div>
+              <svg class="w-5 h-5 text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Loading States -->
+        <div class="card hover-lift">
+          <div class="flex-between mb-4">
+            <h3 class="text-title">Loading States</h3>
+            <span class="badge badge-warning">Skeleton</span>
+          </div>
+          <div class="space-y-4">
+            <div class="space-y-2">
+              <div class="skeleton skeleton-title w-3/4"></div>
+              <div class="skeleton skeleton-text w-full"></div>
+              <div class="skeleton skeleton-text w-5/6"></div>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="skeleton skeleton-avatar"></div>
+              <div class="flex-1 space-y-2">
+                <div class="skeleton skeleton-text w-2/3"></div>
+                <div class="skeleton skeleton-text w-1/2"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Typography -->
+        <div class="card hover-lift">
+          <div class="flex-between mb-4">
+            <h3 class="text-title">Typography</h3>
+            <span class="badge badge-neutral">Hierarchy</span>
+          </div>
+          <div class="space-y-3">
+            <div class="text-display-lg">Display</div>
+            <div class="text-headline">Headline</div>
+            <div class="text-title">Title</div>
+            <div class="text-body">Body text with proper line height and spacing for optimal readability.</div>
+            <div class="text-caption text-muted">Caption text for metadata</div>
+            <div class="text-overline">Overline Label</div>
+          </div>
+        </div>
+
+        <!-- Keyboard Shortcuts -->
+        <div class="card hover-lift">
+          <div class="flex-between mb-4">
+            <h3 class="text-title">Keyboard Shortcuts</h3>
+            <span class="badge badge-info">Shortcuts</span>
+          </div>
+          <div class="space-y-3">
+            <div class="flex-between">
+              <span class="text-body-sm">Quick Command</span>
+              <div class="flex gap-1">
+                <span class="kbd">⌘</span>
+                <span class="kbd">K</span>
+              </div>
+            </div>
+            <div class="flex-between">
+              <span class="text-body-sm">Save Changes</span>
+              <div class="flex gap-1">
+                <span class="kbd">⌘</span>
+                <span class="kbd">S</span>
+              </div>
+            </div>
+            <div class="flex-between">
+              <span class="text-body-sm">Toggle Theme</span>
+              <div class="flex gap-1">
+                <span class="kbd">⌘</span>
+                <span class="kbd">⇧</span>
+                <span class="kbd">T</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cards -->
+        <div class="card hover-lift">
+          <div class="flex-between mb-4">
+            <h3 class="text-title">Card Components</h3>
+            <span class="badge badge-primary">Container</span>
+          </div>
+          <div class="space-y-3">
+            <div class="card" style="padding: 1rem;">
+              <div class="flex-between">
+                <div>
+                  <div class="text-title-lg mb-1">Nested Card</div>
+                  <div class="text-body-sm text-muted">Cards can be nested for complex layouts</div>
+                </div>
+                <svg class="w-6 h-6 text-info" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+            </div>
+            <div class="flex gap-2">
+              <div class="card flex-1 text-center" style="padding: 1rem;">
+                <div class="text-headline text-success mb-1">42</div>
+                <div class="text-caption text-muted">Projects</div>
+              </div>
+              <div class="card flex-1 text-center" style="padding: 1rem;">
+                <div class="text-headline text-warning mb-1">128</div>
+                <div class="text-caption text-muted">Tasks</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Themes Section -->
+  <section id="themes" class="py-20" style="background: var(--bg-section);">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 class="text-display mb-4">8 Beautiful Themes</h2>
+        <p class="text-body-lg text-muted max-w-2xl mx-auto">
+          Choose from 8 professionally designed themes, each optimized for different use cases and preferences.
+          All themes support every component.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Theme Cards -->
+        <div class="card hover-lift cursor-pointer">
+          <div class="w-full h-32 rounded-lg mb-4 hero-gradient"></div>
+          <h3 class="text-title mb-2">Root / Dark</h3>
+          <p class="text-body-sm text-muted mb-3">High contrast, vibrant colors for general use.</p>
+          <div class="flex gap-2">
+            <div class="w-6 h-6 rounded-full" style="background: var(--brand-blue);"></div>
+            <div class="w-6 h-6 rounded-full" style="background: var(--brand-purple);"></div>
+            <div class="w-6 h-6 rounded-full" style="background: var(--brand-green);"></div>
+            <div class="w-6 h-6 rounded-full" style="background: var(--brand-pink);"></div>
+          </div>
+        </div>
+
+        <div class="card hover-lift cursor-pointer t-light">
+          <div class="w-full h-32 rounded-lg mb-4" style="background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);"></div>
+          <h3 class="text-title mb-2">Light</h3>
+          <p class="text-body-sm text-muted mb-3">Crisp and clean for daytime productivity.</p>
+          <div class="flex gap-2">
+            <div class="w-6 h-6 rounded-full" style="background: #45A9F9;"></div>
+            <div class="w-6 h-6 rounded-full" style="background: #B084EB;"></div>
+            <div class="w-6 h-6 rounded-full" style="background: #19f9d8;"></div>
+            <div class="w-6 h-6 rounded-full" style="background: #FF75B5;"></div>
+          </div>
+        </div>
+
+        <div class="card hover-lift cursor-pointer t-calm">
+          <div class="w-full h-32 rounded-lg mb-4" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
+          <h3 class="text-title mb-2">Calm</h3>
+          <p class="text-body-sm text-muted mb-3">Soft blues for reduced eye strain.</p>
+          <div class="flex gap-2">
+            <div class="w-6 h-6 rounded-full" style="background: #7eb3d9;"></div>
+            <div class="w-6 h-6 rounded-full" style="background: #9b8fc9;"></div>
+            <div class="w-6 h-6 rounded-full" style="background: #7fc8b8;"></div>
+            <div class="w-6 h-6 rounded-full" style="background: #d89ab8;"></div>
+          </div>
+        </div>
+
+        <div class="card hover-lift cursor-pointer t-zen">
+          <div class="w-full h-32 rounded-lg mb-4" style="background: linear-gradient(135deg, #a8e063 0%, #56ab2f 100%);"></div>
+          <h3 class="text-title mb-2">Zen</h3>
+          <p class="text-body-sm text-muted mb-3">Earth tones for a calming experience.</p>
+          <div class="flex gap-2">
+            <div class="w-6 h-6 rounded-full" style="background: #7fad7a;"></div>
+            <div class="w-6 h-6 rounded-full" style="background: #9d8fae;"></div>
+            <div class="w-6 h-6 rounded-full" style="background: #c9a876;"></div>
+            <div class="w-6 h-6 rounded-full" style="background: #c57a7a;"></div>
+          </div>
+        </div>
+
+        <div class="card hover-lift cursor-pointer t-focus">
+          <div class="w-full h-32 rounded-lg mb-4" style="background: linear-gradient(135deg, #434343 0%, #000000 100%);"></div>
+          <h3 class="text-title mb-2">Focus</h3>
+          <p class="text-body-sm text-muted mb-3">Minimal color for deep concentration.</p>
+          <div class="flex gap-2">
+            <div class="w-6 h-6 rounded-full" style="background: #6b9ce8;"></div>
+            <div class="w-6 h-6 rounded-full" style="background: #7a7fa8;"></div>
+            <div class="w-6 h-6 rounded-full" style="background: #6b9c8e;"></div>
+            <div class="w-6 h-6 rounded-full" style="background: #9c7a8e;"></div>
+          </div>
+        </div>
+
+        <div class="card hover-lift cursor-pointer t-warm">
+          <div class="w-full h-32 rounded-lg mb-4" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
+          <h3 class="text-title mb-2">Warm</h3>
+          <p class="text-body-sm text-muted mb-3">Amber tones for evening work.</p>
+          <div class="flex gap-2">
+            <div class="w-6 h-6 rounded-full" style="background: #d9a96b;"></div>
+            <div class="w-6 h-6 rounded-full" style="background: #b89fc9;"></div>
+            <div class="w-6 h-6 rounded-full" style="background: #8fb89a;"></div>
+            <div class="w-6 h-6 rounded-full" style="background: #d99fae;"></div>
+          </div>
+        </div>
+
+        <div class="card hover-lift cursor-pointer t-nord">
+          <div class="w-full h-32 rounded-lg mb-4" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
+          <h3 class="text-title mb-2">Nord</h3>
+          <p class="text-body-sm text-muted mb-3">Cool, professional Nordic design.</p>
+          <div class="flex gap-2">
+            <div class="w-6 h-6 rounded-full" style="background: #88c0d0;"></div>
+            <div class="w-6 h-6 rounded-full" style="background: #b48ead;"></div>
+            <div class="w-6 h-6 rounded-full" style="background: #a3be8c;"></div>
+            <div class="w-6 h-6 rounded-full" style="background: #bf616a;"></div>
+          </div>
+        </div>
+
+        <div class="card hover-lift cursor-pointer glass">
+          <div class="w-full h-32 rounded-lg mb-4" style="background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%); border: 1px solid rgba(255,255,255,0.1);"></div>
+          <h3 class="text-title mb-2">Custom</h3>
+          <p class="text-body-sm text-muted mb-3">Build your own theme easily.</p>
+          <button class="btn-ghost btn-sm w-full">Create Theme</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Grid -->
+  <section class="py-20">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 class="text-display mb-4">Built for Production</h2>
+        <p class="text-body-lg text-muted max-w-2xl mx-auto">
+          Every detail matters. Our design system is crafted with best practices,
+          accessibility, and developer experience in mind.
+        </p>
+      </div>
+
+      <div class="feature-grid">
+        <div class="card text-center hover-lift">
+          <div class="w-12 h-12 rounded-lg mx-auto mb-4 flex-center" style="background: color-mix(in oklab, var(--brand-blue) 15%, transparent);">
+            <svg class="w-6 h-6 text-info" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+            </svg>
+          </div>
+          <h3 class="text-title mb-2">Design Tokens</h3>
+          <p class="text-body-sm text-muted">CSS variables for easy theming and customization</p>
+        </div>
+
+        <div class="card text-center hover-lift">
+          <div class="w-12 h-12 rounded-lg mx-auto mb-4 flex-center" style="background: color-mix(in oklab, var(--brand-green) 15%, transparent);">
+            <svg class="w-6 h-6 text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+          </div>
+          <h3 class="text-title mb-2">WCAG AA Compliant</h3>
+          <p class="text-body-sm text-muted">Accessible to all users with proper contrast ratios</p>
+        </div>
+
+        <div class="card text-center hover-lift">
+          <div class="w-12 h-12 rounded-lg mx-auto mb-4 flex-center" style="background: color-mix(in oklab, var(--brand-purple) 15%, transparent);">
+            <svg class="w-6 h-6 text-highlight" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          </div>
+          <h3 class="text-title mb-2">Lightning Fast</h3>
+          <p class="text-body-sm text-muted">Optimized CSS with minimal overhead</p>
+        </div>
+
+        <div class="card text-center hover-lift">
+          <div class="w-12 h-12 rounded-lg mx-auto mb-4 flex-center" style="background: color-mix(in oklab, var(--brand-orange) 15%, transparent);">
+            <svg class="w-6 h-6 text-warning" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+            </svg>
+          </div>
+          <h3 class="text-title mb-2">Fully Customizable</h3>
+          <p class="text-body-sm text-muted">Extend and override any component easily</p>
+        </div>
+
+        <div class="card text-center hover-lift">
+          <div class="w-12 h-12 rounded-lg mx-auto mb-4 flex-center" style="background: color-mix(in oklab, var(--brand-pink) 15%, transparent);">
+            <svg class="w-6 h-6" style="color: var(--brand-pink);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+            </svg>
+          </div>
+          <h3 class="text-title mb-2">Mobile First</h3>
+          <p class="text-body-sm text-muted">Responsive design that works on all devices</p>
+        </div>
+
+        <div class="card text-center hover-lift">
+          <div class="w-12 h-12 rounded-lg mx-auto mb-4 flex-center" style="background: color-mix(in oklab, var(--brand-red) 15%, transparent);">
+            <svg class="w-6 h-6 text-error" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+            </svg>
+          </div>
+          <h3 class="text-title mb-2">Developer Friendly</h3>
+          <p class="text-body-sm text-muted">Simple API with comprehensive documentation</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-20 relative overflow-hidden">
+    <div class="absolute inset-0 hero-gradient opacity-10"></div>
+    <div class="relative max-w-4xl mx-auto px-6 text-center">
+      <h2 class="text-display mb-6">Ready to Build Something Amazing?</h2>
+      <p class="text-body-lg text-muted mb-10 max-w-2xl mx-auto">
+        Start using ProTheme today and create beautiful, accessible, and production-ready interfaces in minutes.
+      </p>
+      <div class="flex flex-wrap items-center justify-center gap-4">
+        <button class="btn-primary btn-lg">
+          Get Started Free
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
+        </button>
+        <button class="btn-secondary btn-lg">
+          View on GitHub
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-12 border-t" style="border-color: var(--border); background: var(--bg-section);">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+        <div>
+          <h4 class="text-title-lg mb-4">Product</h4>
+          <div class="space-y-2">
+            <a href="#" class="block text-body-sm text-muted hover:text-fg">Features</a>
+            <a href="#" class="block text-body-sm text-muted hover:text-fg">Pricing</a>
+            <a href="#" class="block text-body-sm text-muted hover:text-fg">Changelog</a>
+          </div>
+        </div>
+        <div>
+          <h4 class="text-title-lg mb-4">Resources</h4>
+          <div class="space-y-2">
+            <a href="#" class="block text-body-sm text-muted hover:text-fg">Documentation</a>
+            <a href="#" class="block text-body-sm text-muted hover:text-fg">Guides</a>
+            <a href="#" class="block text-body-sm text-muted hover:text-fg">Examples</a>
+          </div>
+        </div>
+        <div>
+          <h4 class="text-title-lg mb-4">Company</h4>
+          <div class="space-y-2">
+            <a href="#" class="block text-body-sm text-muted hover:text-fg">About</a>
+            <a href="#" class="block text-body-sm text-muted hover:text-fg">Blog</a>
+            <a href="#" class="block text-body-sm text-muted hover:text-fg">Careers</a>
+          </div>
+        </div>
+        <div>
+          <h4 class="text-title-lg mb-4">Legal</h4>
+          <div class="space-y-2">
+            <a href="#" class="block text-body-sm text-muted hover:text-fg">Privacy</a>
+            <a href="#" class="block text-body-sm text-muted hover:text-fg">Terms</a>
+            <a href="#" class="block text-body-sm text-muted hover:text-fg">License</a>
+          </div>
+        </div>
+      </div>
+      <div class="border-t pt-8" style="border-color: var(--border);">
+        <div class="flex-between flex-col md:flex-row gap-4">
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-lg hero-gradient"></div>
+            <span class="text-body font-semibold">ProTheme</span>
+          </div>
+          <div class="text-body-sm text-muted">
+            © 2025 ProTheme. Built with Tailwind CSS.
+          </div>
+          <div class="flex gap-4">
+            <a href="#" class="text-muted hover:text-fg">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+              </svg>
+            </a>
+            <a href="#" class="text-muted hover:text-fg">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+              </svg>
+            </a>
+            <a href="#" class="text-muted hover:text-fg">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Simple interactions
+    document.querySelectorAll('.btn-icon, .btn-ghost').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.target.closest('button').classList.add('active-press');
+        setTimeout(() => {
+          e.target.closest('button').classList.remove('active-press');
+        }, 150);
+      });
+    });
+
+    // Toggle example
+    document.querySelectorAll('.toggle').forEach(toggle => {
+      toggle.addEventListener('click', function() {
+        this.classList.toggle('checked');
+      });
+    });
+
+    // Table row selection
+    document.querySelectorAll('.table tbody tr').forEach(row => {
+      row.addEventListener('click', function() {
+        document.querySelectorAll('.table tbody tr').forEach(r => r.classList.remove('selected'));
+        this.classList.add('selected');
+      });
+    });
+
+    // List item selection
+    document.querySelectorAll('.list-item').forEach(item => {
+      item.addEventListener('click', function() {
+        const parent = this.closest('.list-group');
+        parent.querySelectorAll('.list-item').forEach(i => i.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+
+    // Tab switching
+    document.querySelectorAll('.tabs .tab').forEach(tab => {
+      tab.addEventListener('click', function() {
+        const parent = this.closest('.tabs');
+        parent.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+
+    document.querySelectorAll('.tab-pill').forEach(pill => {
+      pill.addEventListener('click', function() {
+        const parent = this.closest('.tabs-pills');
+        parent.querySelectorAll('.tab-pill').forEach(p => p.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
