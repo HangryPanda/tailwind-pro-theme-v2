@@ -1,5 +1,5 @@
 import { useMotionValue, useMotionTemplate, motion, type MotionStyle } from 'motion/react'
-import { useRef, type ReactNode, type MouseEvent } from 'react'
+import { useRef, useState, type ReactNode, type MouseEvent } from 'react'
 import { cn } from '@/lib/utils'
 
 interface MagicCardProps {
@@ -18,59 +18,99 @@ export function MagicCard({
   gradientOpacity = 0.8,
 }: MagicCardProps) {
   const cardRef = useRef<HTMLDivElement>(null)
-  const mouseX = useMotionValue(-gradientSize)
-  const mouseY = useMotionValue(-gradientSize)
+  const mouseX = useMotionValue(0)
+  const mouseY = useMotionValue(0)
+  const [isHovered, setIsHovered] = useState(false)
 
   const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
     if (cardRef.current) {
       const { left, top } = cardRef.current.getBoundingClientRect()
-      const x = e.clientX - left
-      const y = e.clientY - top
-      mouseX.set(x - gradientSize / 2)
-      mouseY.set(y - gradientSize / 2)
+      mouseX.set(e.clientX - left)
+      mouseY.set(e.clientY - top)
     }
   }
 
-  const background = useMotionTemplate`
-    radial-gradient(${gradientSize}px circle at ${mouseX}px ${mouseY}px, ${gradientColor}, transparent ${gradientOpacity * 100}%)
+  const handleMouseEnter = () => {
+    setIsHovered(true)
+  }
+
+  const handleMouseLeave = () => {
+    setIsHovered(false)
+    mouseX.set(0)
+    mouseY.set(0)
+  }
+
+  // Neutral spotlight for background - smooth gradient, no donut
+  const spotlight = useMotionTemplate`
+    radial-gradient(${gradientSize}px circle at ${mouseX}px ${mouseY}px, ${gradientColor}, transparent 80%)
   `
 
-  const borderGradient = useMotionTemplate`
-    radial-gradient(${gradientSize * 1.5}px circle at ${mouseX}px ${mouseY}px, rgba(255,255,255,0.8), transparent 80%)
+  // Spotlight mask for border illumination - smooth falloff
+  const borderMask = useMotionTemplate`
+    radial-gradient(${gradientSize}px circle at ${mouseX}px ${mouseY}px, black, transparent 100%)
   `
 
   return (
-    <div
-      ref={cardRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={() => {
-        mouseX.set(-gradientSize)
-        mouseY.set(-gradientSize)
-      }}
-      className={cn(
-        'group relative overflow-hidden rounded-xl border bg-card',
-        className
-      )}
-    >
-      {/* Border glow effect */}
-      <motion.div
-        className="pointer-events-none absolute inset-0 rounded-xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+    <div className={cn('relative overflow-hidden rounded-xl', className)}>
+      {/* Dim static border - always visible */}
+      <div
+        ref={cardRef}
+        onMouseMove={handleMouseMove}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        className="relative h-full w-full rounded-xl bg-card"
         style={{
-          background: borderGradient,
-          maskImage: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
-          maskComposite: 'exclude',
-          WebkitMaskImage: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
-          WebkitMaskComposite: 'xor',
-          padding: '1px',
+          border: '1px solid transparent',
+          backgroundImage: `
+            linear-gradient(var(--card), var(--card)),
+            linear-gradient(135deg,
+              color-mix(in oklch, var(--brand-purple) 15%, transparent),
+              color-mix(in oklch, var(--brand-blue) 15%, transparent) 50%,
+              color-mix(in oklch, var(--brand-pink) 15%, transparent)
+            )
+          `,
+          backgroundOrigin: 'border-box',
+          backgroundClip: 'padding-box, border-box',
+        }}
+      >
+        {/* Background spotlight - behind content */}
+        <motion.div
+          className="pointer-events-none absolute inset-0 rounded-xl -z-10"
+          animate={{
+            opacity: isHovered ? gradientOpacity : 0,
+          }}
+          transition={{ duration: 0.3 }}
+          style={{ background: spotlight } as MotionStyle}
+        />
+
+        <div className="relative z-10">
+          {children}
+        </div>
+      </div>
+
+      {/* Bright border layer - revealed by cursor proximity */}
+      <motion.div
+        className="pointer-events-none absolute inset-0 rounded-xl"
+        animate={{
+          opacity: isHovered ? 1 : 0,
+        }}
+        transition={{ duration: 0.3 }}
+        style={{
+          border: '1px solid transparent',
+          backgroundImage: `
+            linear-gradient(var(--card), var(--card)),
+            linear-gradient(135deg,
+              var(--brand-purple),
+              var(--brand-blue) 50%,
+              var(--brand-pink)
+            )
+          `,
+          backgroundOrigin: 'border-box',
+          backgroundClip: 'padding-box, border-box',
+          WebkitMaskImage: borderMask,
+          maskImage: borderMask,
         } as MotionStyle}
       />
-
-      {/* Main gradient effect */}
-      <motion.div
-        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-        style={{ background } as MotionStyle}
-      />
-      {children}
     </div>
   )
 }
