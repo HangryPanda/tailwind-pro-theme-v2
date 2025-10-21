@@ -848,6 +848,20 @@
   animation: collapsible-up var(--collapsible-duration, 300ms) ease-out;
 }
 
+/* Border Beam animation */
+@keyframes border-beam {
+  0% {
+    offset-distance: 0%;
+  }
+  100% {
+    offset-distance: 100%;
+  }
+}
+
+.animate-border-beam {
+  animation: border-beam var(--duration, 15s) linear infinite;
+}
+
 /* Print Styles */
 @media print {
   /* Hide window chrome, desktop, taskbar */
