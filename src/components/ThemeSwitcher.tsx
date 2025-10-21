@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { motion, AnimatePresence } from 'motion/react'
+import { Palette, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 const darkThemes = [
@@ -19,8 +21,8 @@ const lightThemes = [
   { name: 'Calm Light', class: 't-calm-light', description: 'Soft sky & gentle blue', mood: 'calming' },
   { name: 'Zen Light', class: 't-zen-light', description: 'Warm earth & beige', mood: 'calming' },
   { name: 'Serene', class: 't-serene', description: 'Peaceful lavender', mood: 'calming' },
-  { name: 'Vibrant', class: 't-vibrant', description: 'High energy colors', mood: 'stimulating' },
-  { name: 'Energetic', class: 't-energetic', description: 'Bright & bold', mood: 'stimulating' },
+  { name: 'Energetic', class: 't-vibrant', description: 'Cool high-energy tones', mood: 'stimulating' },
+  { name: 'Vibrant', class: 't-energetic', description: 'Warm bright colors', mood: 'stimulating' },
   { name: 'Bold', class: 't-bold', description: 'Maximum impact', mood: 'stimulating' },
 ]
 
@@ -28,6 +30,7 @@ const allThemes = [...darkThemes, ...lightThemes]
 
 export function ThemeSwitcher() {
   const [currentThemeIndex, setCurrentThemeIndex] = useState(0)
+  const [isOpen, setIsOpen] = useState(false)
 
   const switchTheme = (index: number) => {
     setCurrentThemeIndex(index)
@@ -48,65 +51,93 @@ export function ThemeSwitcher() {
   const isDark = currentThemeIndex < darkThemes.length
 
   return (
-    <div className="fixed top-4 right-4 z-50 flex flex-col gap-4 bg-card/95 backdrop-blur-sm p-5 rounded-xl border shadow-lg max-w-lg">
-      <div className="flex items-center justify-between">
-        <div className="text-sm font-semibold text-foreground">
-          Theme Switcher
-        </div>
-        <div className="text-xs text-muted-foreground">
-          {isDark ? '🌙 Dark' : '☀️ Light'} • {currentTheme.mood}
-        </div>
-      </div>
+    <>
+      {/* Toggle Button - Ultra Compact */}
+      <motion.button
+        onClick={() => setIsOpen(!isOpen)}
+        className="fixed top-4 right-6 z-50 p-2 rounded-lg border shadow-md bg-card/95 backdrop-blur-sm transition-all"
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        title={`Theme: ${currentTheme.name}`}
+      >
+        <Palette className="w-4 h-4" style={{ color: 'var(--brand-purple)' }} />
+      </motion.button>
 
-      {/* Dark Themes */}
-      <div className="space-y-2">
-        <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
-          Dark Themes
-        </div>
-        <div className="grid grid-cols-3 gap-2">
-          {darkThemes.map((theme, index) => (
-            <Button
-              key={theme.name}
-              variant={currentThemeIndex === index ? "default" : "outline"}
-              size="sm"
-              onClick={() => switchTheme(index)}
-              className="text-xs h-9 px-2"
-              title={theme.description}
-            >
-              {theme.name}
-            </Button>
-          ))}
-        </div>
-      </div>
-
-      {/* Light Themes */}
-      <div className="space-y-2">
-        <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
-          Light Themes
-        </div>
-        <div className="grid grid-cols-3 gap-2">
-          {lightThemes.map((theme, index) => {
-            const globalIndex = darkThemes.length + index
-            return (
-              <Button
-                key={theme.name}
-                variant={currentThemeIndex === globalIndex ? "default" : "outline"}
-                size="sm"
-                onClick={() => switchTheme(globalIndex)}
-                className="text-xs h-9 px-2"
-                title={theme.description}
+      {/* Theme Switcher Panel - Ultra Compact */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, y: -10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: -10 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+            className="fixed top-16 right-6 z-50 w-52 bg-card/95 backdrop-blur-sm p-3 rounded-lg border shadow-xl"
+          >
+            <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center gap-1.5">
+                <span className="text-xs">{isDark ? '🌙' : '☀️'}</span>
+                <div className="text-xs font-semibold text-foreground">Themes</div>
+              </div>
+              <button
+                onClick={() => setIsOpen(false)}
+                className="p-0.5 hover:bg-accent rounded transition-colors"
+                title="Close"
               >
-                {theme.name}
-              </Button>
-            )
-          })}
-        </div>
-      </div>
+                <X className="w-3 h-3" />
+              </button>
+            </div>
 
-      <div className="text-xs text-muted-foreground border-t pt-3">
-        <div className="font-medium text-foreground mb-1">{currentTheme.name}</div>
-        {currentTheme.description}
-      </div>
-    </div>
+            {/* Dark Themes */}
+            <div className="mb-2">
+              <div className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider mb-1">
+                Dark
+              </div>
+              <div className="grid grid-cols-2 gap-1">
+                {darkThemes.map((theme, index) => (
+                  <button
+                    key={theme.name}
+                    onClick={() => switchTheme(index)}
+                    className={`text-[10px] px-2 py-1 rounded transition-all ${
+                      currentThemeIndex === index
+                        ? 'bg-primary text-primary-foreground font-medium'
+                        : 'bg-secondary/50 hover:bg-secondary text-secondary-foreground'
+                    }`}
+                    title={theme.description}
+                  >
+                    {theme.name.replace(' Dark', '')}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Light Themes */}
+            <div>
+              <div className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider mb-1">
+                Light
+              </div>
+              <div className="grid grid-cols-2 gap-1">
+                {lightThemes.map((theme, index) => {
+                  const globalIndex = darkThemes.length + index
+                  return (
+                    <button
+                      key={theme.name}
+                      onClick={() => switchTheme(globalIndex)}
+                      className={`text-[10px] px-2 py-1 rounded transition-all ${
+                        currentThemeIndex === globalIndex
+                          ? 'bg-primary text-primary-foreground font-medium'
+                          : 'bg-secondary/50 hover:bg-secondary text-secondary-foreground'
+                      }`}
+                      title={theme.description}
+                    >
+                      {theme.name.replace(' Light', '')}
+                    </button>
+                  )
+                })}
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   )
 }

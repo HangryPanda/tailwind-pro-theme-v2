@@ -1,5 +1,5 @@
 import { useMotionValue, useMotionTemplate, motion, type MotionStyle } from 'motion/react'
-import { useRef, useState, type ReactNode, type MouseEvent } from 'react'
+import { useRef, type ReactNode, type MouseEvent } from 'react'
 import { cn } from '@/lib/utils'
 
 interface MagicCardProps {
@@ -21,8 +21,6 @@ export function MagicCard({
   const mouseX = useMotionValue(-gradientSize)
   const mouseY = useMotionValue(-gradientSize)
 
-  const [isHovering, setIsHovering] = useState(false)
-
   const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
     if (cardRef.current) {
       const { left, top } = cardRef.current.getBoundingClientRect()
@@ -37,13 +35,15 @@ export function MagicCard({
     radial-gradient(${gradientSize}px circle at ${mouseX}px ${mouseY}px, ${gradientColor}, transparent ${gradientOpacity * 100}%)
   `
 
+  const borderGradient = useMotionTemplate`
+    radial-gradient(${gradientSize * 1.5}px circle at ${mouseX}px ${mouseY}px, rgba(255,255,255,0.8), transparent 80%)
+  `
+
   return (
     <div
       ref={cardRef}
       onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => {
-        setIsHovering(false)
         mouseX.set(-gradientSize)
         mouseY.set(-gradientSize)
       }}
@@ -52,13 +52,25 @@ export function MagicCard({
         className
       )}
     >
+      {/* Border glow effect */}
+      <motion.div
+        className="pointer-events-none absolute inset-0 rounded-xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+        style={{
+          background: borderGradient,
+          maskImage: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+          maskComposite: 'exclude',
+          WebkitMaskImage: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+          WebkitMaskComposite: 'xor',
+          padding: '1px',
+        } as MotionStyle}
+      />
+
+      {/* Main gradient effect */}
+      <motion.div
+        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+        style={{ background } as MotionStyle}
+      />
       {children}
-      {isHovering && (
-        <motion.div
-          className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-          style={{ background } as MotionStyle}
-        />
-      )}
     </div>
   )
 }

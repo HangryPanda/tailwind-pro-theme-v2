@@ -38,6 +38,11 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Animations */
+  --animate-border-beam: border-beam 15s linear infinite;
+  --animate-collapsible-down: collapsible-down 300ms ease-out;
+  --animate-collapsible-up: collapsible-up 300ms ease-out;
 }
 
 /* ==========================================================================
@@ -52,7 +57,7 @@
   --bg-section: oklch(0.17 0 0);       /* #292A2B */
   --fg-default: oklch(0.9 0 0);        /* #E6E6E6 */
   --fg-muted: oklch(0.75 0 0);         /* #BBBBBB */
-  --border-color: oklch(0.14 0 0);     /* #222223 */
+  --border-color: oklch(0.25 0 0);     /* More visible border */
 
   /* ProTheme brand colors */
   --brand-blue: oklch(0.7 0.118 230);     /* #45A9F9 */
@@ -71,11 +76,11 @@
   --popover-foreground: var(--fg-default);
   --primary: var(--brand-blue);
   --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.22 0.03 290);        /* subtle purple tint */
+  --secondary: oklch(0.26 0.04 290);        /* Clearer purple - better hierarchy */
   --secondary-foreground: oklch(0.9 0 0);
-  --muted: oklch(0.19 0.01 230);            /* subtle blue tint */
+  --muted: oklch(0.24 0.02 230);            /* More visible blue tint */
   --muted-foreground: var(--fg-muted);
-  --accent: oklch(0.28 0.05 180);           /* cyan-green accent */
+  --accent: oklch(0.32 0.07 180);           /* Punchier cyan-green accent */
   --accent-foreground: var(--fg-default);
   --destructive: var(--brand-red);
   --destructive-foreground: oklch(0.985 0 0);
@@ -153,7 +158,7 @@
   --bg-section: oklch(0.17 0 0);          /* #292A2B */
   --fg-default: oklch(0.9 0 0);           /* #E6E6E6 */
   --fg-muted: oklch(0.75 0 0);            /* #BBBBBB */
-  --border-color: oklch(0.14 0 0);        /* #222223 */
+  --border-color: oklch(0.25 0 0);        /* More visible border */
 
   --background: var(--bg-app);
   --foreground: var(--fg-default);
@@ -163,11 +168,11 @@
   --popover-foreground: var(--fg-default);
   --primary: var(--brand-blue);
   --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.22 0.03 290);        /* subtle purple tint */
+  --secondary: oklch(0.26 0.04 290);        /* Clearer purple - better hierarchy */
   --secondary-foreground: oklch(0.9 0 0);
-  --muted: oklch(0.19 0.01 230);            /* subtle blue tint */
+  --muted: oklch(0.24 0.02 230);            /* More visible blue tint */
   --muted-foreground: var(--fg-muted);
-  --accent: oklch(0.28 0.05 180);           /* cyan-green accent */
+  --accent: oklch(0.32 0.07 180);           /* Punchier cyan-green accent */
   --accent-foreground: var(--fg-default);
   --destructive: var(--brand-red);
   --destructive-foreground: oklch(0.985 0 0);
@@ -190,7 +195,7 @@
   --bg-section: oklch(0.14 0.02 250);     /* #20242b */
   --fg-default: oklch(0.85 0.015 250);    /* #d4dae3 soft blue-tinted white */
   --fg-muted: oklch(0.6 0.02 250);        /* #8b95a8 muted blue-gray */
-  --border-color: oklch(0.18 0.02 250);   /* #2a3140 soft navy */
+  --border-color: oklch(0.24 0.02 250);   /* Better visible soft navy */
 
   --brand-blue: oklch(0.7 0.08 230);      /* #7eb3d9 softer blue */
   --brand-purple: oklch(0.65 0.1 280);    /* #9b8fc9 lavender */
@@ -207,11 +212,11 @@
   --popover-foreground: var(--fg-default);
   --primary: var(--brand-blue);
   --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.18 0.04 280);        /* soft lavender tint */
+  --secondary: oklch(0.25 0.05 280);        /* More visible soft lavender */
   --secondary-foreground: var(--fg-default);
-  --muted: oklch(0.15 0.03 230);            /* muted blue background */
+  --muted: oklch(0.21 0.03 230);            /* Calming, visible blue */
   --muted-foreground: var(--fg-muted);
-  --accent: oklch(0.23 0.06 180);           /* soft teal accent */
+  --accent: oklch(0.30 0.08 180);           /* Calm yet visible teal accent */
   --accent-foreground: var(--fg-default);
   --destructive: var(--brand-red);
   --destructive-foreground: oklch(0.985 0 0);
@@ -234,7 +239,7 @@
   --bg-section: oklch(0.14 0.015 130);    /* #232620 soft charcoal-green */
   --fg-default: oklch(0.87 0.01 130);     /* #dce5d8 soft sage white */
   --fg-muted: oklch(0.6 0.02 130);        /* #8a9685 muted sage */
-  --border-color: oklch(0.18 0.015 130);  /* #2d322a earth border */
+  --border-color: oklch(0.24 0.02 130);   /* More visible earth border */
 
   --brand-blue: oklch(0.65 0.08 220);     /* #6b9fb5 ocean blue */
   --brand-purple: oklch(0.62 0.08 280);   /* #9d8fae soft violet */
@@ -251,11 +256,11 @@
   --popover-foreground: var(--fg-default);
   --primary: var(--brand-green);
   --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.18 0.03 60);         /* warm clay secondary */
+  --secondary: oklch(0.25 0.04 60);         /* Visible warm clay secondary */
   --secondary-foreground: var(--fg-default);
-  --muted: oklch(0.15 0.02 130);            /* subtle moss background */
+  --muted: oklch(0.21 0.03 130);            /* Tranquil, visible moss */
   --muted-foreground: var(--fg-muted);
-  --accent: oklch(0.22 0.04 220);           /* ocean blue accent */
+  --accent: oklch(0.30 0.06 220);           /* Peaceful yet visible ocean accent */
   --accent-foreground: var(--fg-default);
   --destructive: var(--brand-red);
   --destructive-foreground: oklch(0.985 0 0);
@@ -278,7 +283,7 @@
   --bg-section: oklch(0.1 0 0);           /* #16181c very dark gray */
   --fg-default: oklch(0.8 0 0);           /* #c5cad3 cool light gray */
   --fg-muted: oklch(0.46 0 0);            /* #6b727e muted gray */
-  --border-color: oklch(0.12 0 0);        /* #1f2229 subtle border */
+  --border-color: oklch(0.20 0 0);        /* Better visible border */
 
   --brand-blue: oklch(0.68 0.1 240);      /* #6b9ce8 primary accent */
   --brand-purple: oklch(0.55 0.05 270);   /* #7a7fa8 desaturated */
@@ -295,22 +300,22 @@
   --popover-foreground: var(--fg-default);
   --primary: var(--brand-blue);
   --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.13 0.01 270);        /* very subtle purple */
+  --secondary: oklch(0.18 0.02 270);        /* More visible purple */
   --secondary-foreground: var(--fg-default);
-  --muted: oklch(0.11 0.005 0);             /* almost pure dark */
+  --muted: oklch(0.16 0.005 0);             /* More visible muted */
   --muted-foreground: var(--fg-muted);
-  --accent: oklch(0.18 0.08 240);           /* focused blue accent */
+  --accent: oklch(0.25 0.08 240);           /* More visible blue accent */
   --accent-foreground: var(--fg-default);
   --destructive: var(--brand-red);
   --destructive-foreground: oklch(0.985 0 0);
   --border: var(--border-color);
-  --input: oklch(0.13 0 0);
+  --input: oklch(0.15 0 0);
   --ring: var(--brand-blue);
   --sidebar: var(--bg-section);
   --sidebar-foreground: var(--fg-default);
   --sidebar-primary: var(--brand-blue);
   --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.18 0.08 240);
+  --sidebar-accent: oklch(0.25 0.08 240);
   --sidebar-accent-foreground: var(--fg-default);
   --sidebar-border: var(--border-color);
   --sidebar-ring: var(--brand-blue);
@@ -322,7 +327,7 @@
   --bg-section: oklch(0.13 0.02 40);      /* #252018 chocolate brown */
   --fg-default: oklch(0.88 0.02 50);      /* #e8dfd4 warm cream */
   --fg-muted: oklch(0.62 0.02 40);        /* #a89886 warm gray */
-  --border-color: oklch(0.16 0.02 40);    /* #2d261e coffee border */
+  --border-color: oklch(0.24 0.03 40);    /* Much better coffee border */
 
   --brand-blue: oklch(0.68 0.08 230);     /* #7a9fc9 warm blue */
   --brand-purple: oklch(0.7 0.1 290);     /* #b89fc9 warm lavender */
@@ -339,11 +344,11 @@
   --popover-foreground: var(--fg-default);
   --primary: var(--brand-orange);
   --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.16 0.04 350);        /* warm pink secondary */
+  --secondary: oklch(0.25 0.06 350);        /* Cozy, visible warm pink */
   --secondary-foreground: var(--fg-default);
-  --muted: oklch(0.14 0.03 40);             /* warm chocolate muted */
+  --muted: oklch(0.21 0.04 40);             /* Warm, inviting chocolate */
   --muted-foreground: var(--fg-muted);
-  --accent: oklch(0.21 0.05 230);           /* warm blue accent */
+  --accent: oklch(0.30 0.07 230);           /* Warm, visible blue accent */
   --accent-foreground: var(--fg-default);
   --destructive: var(--brand-red);
   --destructive-foreground: oklch(0.985 0 0);
@@ -383,11 +388,11 @@
   --popover-foreground: var(--fg-default);
   --primary: var(--brand-blue);
   --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.32 0.04 310);        /* nord aurora purple */
+  --secondary: oklch(0.36 0.05 310);        /* Distinct nord aurora purple */
   --secondary-foreground: var(--fg-default);
   --muted: oklch(0.30 0.03 230);            /* cool frost muted */
   --muted-foreground: var(--fg-muted);
-  --accent: oklch(0.38 0.06 130);           /* nord aurora green */
+  --accent: oklch(0.42 0.08 130);           /* Brighter nord aurora green */
   --accent-foreground: var(--fg-default);
   --destructive: var(--brand-red);
   --destructive-foreground: oklch(0.985 0 0);
@@ -398,7 +403,7 @@
   --sidebar-foreground: var(--fg-default);
   --sidebar-primary: var(--brand-blue);
   --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.38 0.06 130);
+  --sidebar-accent: oklch(0.42 0.08 130);
   --sidebar-accent-foreground: var(--fg-default);
   --sidebar-border: var(--border-color);
   --sidebar-ring: var(--brand-blue);
@@ -414,7 +419,7 @@
   --bg-section: oklch(0.16 0.02 250);     /* #262a3b slightly lighter */
   --fg-default: oklch(0.95 0.01 250);     /* #f2f4ff crisp white */
   --fg-muted: oklch(0.7 0.02 250);        /* #a8b0d0 bright muted */
-  --border-color: oklch(0.2 0.02 250);    /* #2d3348 vivid border */
+  --border-color: oklch(0.25 0.03 250);   /* More vibrant border */
 
   --brand-blue: oklch(0.7 0.18 230);      /* #00a8ff vibrant blue */
   --brand-purple: oklch(0.68 0.2 290);    /* #a855ff electric purple */
@@ -431,11 +436,11 @@
   --popover-foreground: var(--fg-default);
   --primary: var(--brand-blue);
   --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.20 0.12 290);        /* vivid purple secondary */
+  --secondary: oklch(0.28 0.14 290);        /* Truly vivid purple secondary */
   --secondary-foreground: var(--fg-default);
-  --muted: oklch(0.17 0.04 250);            /* electric blue muted */
+  --muted: oklch(0.24 0.05 250);            /* Visible electric blue muted */
   --muted-foreground: var(--fg-muted);
-  --accent: oklch(0.26 0.15 340);           /* hot pink accent */
+  --accent: oklch(0.35 0.18 340);           /* Eye-catching hot pink accent */
   --accent-foreground: var(--fg-default);
   --destructive: var(--brand-red);
   --destructive-foreground: oklch(0.985 0 0);
@@ -458,7 +463,7 @@
   --bg-section: oklch(0.14 0.015 30);     /* #251e18 chocolate dark */
   --fg-default: oklch(0.95 0.01 60);      /* #fffaf0 warm white */
   --fg-muted: oklch(0.68 0.02 50);        /* #c4a880 warm muted */
-  --border-color: oklch(0.18 0.015 30);   /* #2d241c warm border */
+  --border-color: oklch(0.24 0.03 30);    /* Energetic warm border */
 
   --brand-blue: oklch(0.68 0.15 230);     /* #2a90ff bright blue */
   --brand-purple: oklch(0.7 0.18 290);    /* #b855ff electric purple */
@@ -475,11 +480,11 @@
   --popover-foreground: var(--fg-default);
   --primary: var(--brand-orange);
   --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.18 0.12 350);        /* energetic pink secondary */
+  --secondary: oklch(0.26 0.14 350);        /* Truly energetic pink secondary */
   --secondary-foreground: var(--fg-default);
-  --muted: oklch(0.15 0.04 30);             /* warm brown muted */
+  --muted: oklch(0.22 0.05 30);             /* Visible warm brown muted */
   --muted-foreground: var(--fg-muted);
-  --accent: oklch(0.23 0.12 150);           /* neon green accent */
+  --accent: oklch(0.32 0.15 150);           /* Powerful neon green accent */
   --accent-foreground: var(--fg-default);
   --destructive: var(--brand-red);
   --destructive-foreground: oklch(0.985 0 0);
@@ -502,7 +507,7 @@
   --bg-section: oklch(0.1 0.01 270);      /* #16161f dark purple-gray */
   --fg-default: oklch(0.98 0.005 0);      /* #fafafa bright white */
   --fg-muted: oklch(0.65 0.015 270);      /* #9090b0 cool gray */
-  --border-color: oklch(0.15 0.01 270);   /* #202030 bold border */
+  --border-color: oklch(0.25 0.02 270);   /* Much more visible border */
 
   --brand-blue: oklch(0.65 0.2 230);      /* #0080ff bold blue */
   --brand-purple: oklch(0.62 0.22 290);   /* #9d00ff bold purple */
@@ -519,22 +524,22 @@
   --popover-foreground: var(--fg-default);
   --primary: var(--brand-blue);
   --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.15 0.14 290);        /* bold purple secondary */
+  --secondary: oklch(0.24 0.16 290);        /* Bold purple - highly visible */
   --secondary-foreground: var(--fg-default);
-  --muted: oklch(0.12 0.03 270);            /* deep purple muted */
+  --muted: oklch(0.20 0.04 270);            /* Visible muted purple */
   --muted-foreground: var(--fg-muted);
-  --accent: oklch(0.22 0.18 165);           /* bold teal accent */
+  --accent: oklch(0.35 0.20 165);           /* Punchy teal accent - maximum impact */
   --accent-foreground: var(--fg-default);
   --destructive: var(--brand-red);
   --destructive-foreground: oklch(0.985 0 0);
   --border: var(--border-color);
-  --input: oklch(0.14 0.01 270);
+  --input: oklch(0.18 0.02 270);
   --ring: var(--brand-blue);
   --sidebar: var(--bg-section);
   --sidebar-foreground: var(--fg-default);
   --sidebar-primary: var(--brand-blue);
   --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.22 0.18 165);
+  --sidebar-accent: oklch(0.35 0.20 165);
   --sidebar-accent-foreground: var(--fg-default);
   --sidebar-border: var(--border-color);
   --sidebar-ring: var(--brand-blue);
@@ -676,7 +681,7 @@
   --sidebar-ring: var(--brand-purple);
 }
 
-/* Vibrant - high saturation, energetic colors for motivation */
+/* Energetic (CSS class: t-vibrant) - high energy cool colors for motivation */
 .t-vibrant {
   --bg-app: oklch(0.98 0.01 200);          /* #f7fbfd crisp white */
   --bg-section: oklch(0.94 0.015 200);     /* #e8f3f8 bright blue tint */
@@ -720,7 +725,7 @@
   --sidebar-ring: var(--brand-blue);
 }
 
-/* Energetic - bright oranges & yellows for high energy */
+/* Vibrant (CSS class: t-energetic) - bright warm colors for high energy */
 .t-energetic {
   --bg-app: oklch(0.99 0.01 70);           /* #fffbf5 warm white */
   --bg-section: oklch(0.95 0.02 60);       /* #fcf2e0 light peach */
@@ -811,6 +816,9 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
+  }
+  html {
+    font-size: 13px;
   }
   body {
     @apply bg-background text-foreground;

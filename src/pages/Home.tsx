@@ -1,6 +1,6 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { motion } from 'motion/react'
-import { ThemeSwitcher } from '@/components/ThemeSwitcher'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -28,7 +28,7 @@ const itemVariants = {
   }
 }
 
-function App() {
+export default function HomePage() {
   const [liked, setLiked] = useState(false)
 
   const features = [
@@ -48,18 +48,16 @@ function App() {
   ]
 
   const systemColors = [
-    { name: 'Background', class: 'bg-background text-foreground border border-border' },
-    { name: 'Card', class: 'bg-card text-card-foreground border border-border' },
-    { name: 'Primary', class: 'bg-primary text-primary-foreground' },
-    { name: 'Secondary', class: 'bg-secondary text-secondary-foreground' },
-    { name: 'Muted', class: 'bg-muted text-muted-foreground' },
-    { name: 'Accent', class: 'bg-accent text-accent-foreground' },
+    { name: 'Background', class: 'bg-background text-foreground border-2', borderColor: 'var(--border)', bgOverlay: 'var(--background)' },
+    { name: 'Card', class: 'bg-card text-card-foreground border-2', borderColor: 'var(--border)', bgOverlay: 'var(--card)' },
+    { name: 'Primary', class: 'bg-primary text-primary-foreground border-2 border-primary', borderColor: 'var(--primary)', bgOverlay: 'var(--primary)' },
+    { name: 'Secondary', class: 'bg-secondary text-secondary-foreground border-2 border-secondary', borderColor: 'var(--secondary)', bgOverlay: 'var(--secondary)' },
+    { name: 'Muted', class: 'bg-muted text-muted-foreground border-2 border-muted', borderColor: 'var(--muted)', bgOverlay: 'var(--muted)' },
+    { name: 'Accent', class: 'bg-accent text-accent-foreground border-2 border-accent', borderColor: 'var(--accent)', bgOverlay: 'var(--accent)' },
   ]
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <ThemeSwitcher />
-
+    <>
       {/* Hero Section */}
       <motion.section
         className="relative overflow-hidden px-6 pt-20 pb-16 sm:pt-32 sm:pb-24"
@@ -67,10 +65,10 @@ function App() {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
       >
-        {/* Ambient color orbs */}
-        <div className="absolute top-0 left-1/4 w-96 h-96 rounded-full blur-3xl opacity-20" style={{ background: 'var(--brand-blue)' }} />
-        <div className="absolute top-20 right-1/4 w-96 h-96 rounded-full blur-3xl opacity-15" style={{ background: 'var(--brand-purple)' }} />
-        <div className="absolute bottom-0 left-1/2 w-96 h-96 rounded-full blur-3xl opacity-10" style={{ background: 'var(--brand-pink)' }} />
+        {/* Ambient color orbs - visible on light themes */}
+        <div className="absolute top-0 left-1/4 w-96 h-96 rounded-full blur-3xl opacity-30" style={{ background: 'var(--brand-blue)' }} />
+        <div className="absolute top-20 right-1/4 w-96 h-96 rounded-full blur-3xl opacity-25" style={{ background: 'var(--brand-purple)' }} />
+        <div className="absolute bottom-0 left-1/2 w-96 h-96 rounded-full blur-3xl opacity-20" style={{ background: 'var(--brand-pink)' }} />
 
         <div className="mx-auto max-w-5xl text-center relative z-10">
           <motion.div
@@ -120,15 +118,17 @@ function App() {
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.6, duration: 0.8 }}
           >
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button size="lg" className="gap-2" style={{
-                background: 'var(--brand-blue)',
-                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1), 0 0 20px var(--brand-blue)/20'
-              }}>
-                <Star className="w-4 h-4" />
-                Get Started
-              </Button>
-            </motion.div>
+            <Link to="/components">
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button size="lg" className="gap-2" style={{
+                  background: 'var(--brand-blue)',
+                  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1), 0 0 20px var(--brand-blue)/20'
+                }}>
+                  <Star className="w-4 h-4" />
+                  Get Started
+                </Button>
+              </motion.div>
+            </Link>
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button size="lg" variant="outline" className="gap-2 border-2" style={{
                 borderColor: 'var(--brand-purple)',
@@ -191,19 +191,19 @@ function App() {
                         e.currentTarget.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.05)';
                       }}
                     >
-                      {/* Subtle gradient background on hover */}
+                      {/* Enhanced gradient background on hover - BOLD on light themes */}
                       <div
                         className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                         style={{
-                          background: `radial-gradient(circle at top right, var(${color.main})/5, transparent 70%)`
+                          background: `radial-gradient(circle at top right, var(${color.main})/28, transparent 70%)`
                         }}
                       />
                       <CardHeader className="relative">
                         <div
                           className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 relative"
                           style={{
-                            background: `var(${color.main})/10`,
-                            boxShadow: `0 0 20px var(${color.main})/20`
+                            background: `var(${color.main})/30`,
+                            boxShadow: `0 0 20px var(${color.main})/50, 0 0 0 1px var(${color.main})/20`
                           }}
                         >
                           <feature.icon className="w-6 h-6" style={{ color: `var(${color.main})` }} />
@@ -225,12 +225,13 @@ function App() {
         className="px-6 py-24 relative"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
+        viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.8 }}
       >
-        {/* Subtle background gradient */}
-        <div className="absolute inset-0 opacity-5" style={{
-          background: 'radial-gradient(circle at 20% 50%, var(--brand-blue), transparent 50%), radial-gradient(circle at 80% 50%, var(--brand-pink), transparent 50%)'
+        {/* Dynamic background gradient - ACTUALLY VISIBLE on light themes! */}
+        <div className="absolute inset-0" style={{
+          background: 'radial-gradient(circle at 20% 50%, var(--brand-blue), transparent 50%), radial-gradient(circle at 80% 50%, var(--brand-pink), transparent 50%)',
+          opacity: 0.25
         }} />
 
         <div className="mx-auto max-w-6xl relative">
@@ -266,23 +267,23 @@ function App() {
                   <div
                     className="relative rounded-xl p-8 text-center border-2 transition-all duration-300"
                     style={{
-                      backgroundColor: `var(${color.var})/5`,
-                      borderColor: `var(${color.var})/20`
+                      backgroundColor: `var(${color.var})/25`,
+                      borderColor: `var(${color.var})/60`
                     }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.borderColor = `var(${color.var})`;
-                      e.currentTarget.style.backgroundColor = `var(${color.var})/10`;
+                      e.currentTarget.style.borderColor = `var(${color.var})/90`;
+                      e.currentTarget.style.backgroundColor = `var(${color.var})/35`;
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.borderColor = `var(${color.var})/20`;
-                      e.currentTarget.style.backgroundColor = `var(${color.var})/5`;
+                      e.currentTarget.style.borderColor = `var(${color.var})/60`;
+                      e.currentTarget.style.backgroundColor = `var(${color.var})/25`;
                     }}
                   >
                     <div
                       className="w-8 h-8 rounded-full mx-auto mb-3"
                       style={{
                         backgroundColor: `var(${color.var})`,
-                        boxShadow: `0 4px 14px var(${color.var})/40`
+                        boxShadow: `0 4px 14px var(${color.var})/60, 0 0 0 4px var(${color.var})/25, 0 0 0 1px var(${color.var})/40`
                       }}
                     />
                     <div className="font-bold text-sm" style={{ color: `var(${color.var})` }}>
@@ -310,9 +311,21 @@ function App() {
                   whileInView={{ scale: 1, opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.05 }}
-                  whileHover={{ scale: 1.05 }}
+                  whileHover={{ scale: 1.05, y: -4 }}
+                  className="relative group"
                 >
-                  <div className={`${color.class} rounded-xl p-6 text-center transition-shadow hover:shadow-lg`}>
+                  {/* Enhanced glow on hover */}
+                  <div
+                    className="absolute -inset-1 rounded-xl opacity-0 group-hover:opacity-60 blur-lg transition-opacity duration-300"
+                    style={{ background: color.bgOverlay }}
+                  />
+                  <div
+                    className={`${color.class} rounded-xl p-6 text-center transition-all duration-300 relative`}
+                    style={{
+                      borderColor: color.borderColor,
+                      boxShadow: `0 2px 8px ${color.bgOverlay}/15, inset 0 1px 0 ${color.bgOverlay}/20`
+                    }}
+                  >
                     <div className="font-semibold text-sm">{color.name}</div>
                   </div>
                 </motion.div>
@@ -505,8 +518,6 @@ function App() {
           </div>
         </div>
       </footer>
-    </div>
+    </>
   )
 }
-
-export default App

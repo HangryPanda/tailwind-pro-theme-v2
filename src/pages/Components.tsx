@@ -1,16 +1,18 @@
 import { useState, useRef } from 'react'
 import confetti from 'canvas-confetti'
 import { motion } from 'motion/react'
-import { ChevronRight, ChevronDown, Folder, File, Check, Loader2, AlertCircle } from 'lucide-react'
+import { toast } from 'sonner'
+import { ChevronRight, ChevronDown, Folder, File, Check, Loader2, AlertCircle, Info, Bell, Trash2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { ConfettiButton, Confetti, type ConfettiRef } from '@/components/magicui/confetti'
 import { BorderBeam } from '@/components/magicui/border-beam'
 import { MagicCard } from '@/components/magicui/magic-card'
-import { ThemeSwitcher } from '@/components/ThemeSwitcher'
+import { AccordionItem } from '@/components/ui/accordion'
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -107,41 +109,6 @@ function TreeItem({ node, level = 0 }: { node: TreeNode; level?: number }) {
           ))}
         </div>
       )}
-    </div>
-  )
-}
-
-// Accordion Component using motion
-function AccordionItem({ title, children, defaultOpen = false }: { title: string; children: React.ReactNode; defaultOpen?: boolean }) {
-  const [isOpen, setIsOpen] = useState(defaultOpen)
-
-  return (
-    <div className="border rounded-lg overflow-hidden">
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between px-4 py-3 bg-accent/50 hover:bg-accent transition-colors text-left"
-      >
-        <span className="font-medium">{title}</span>
-        <motion.div
-          animate={{ rotate: isOpen ? 180 : 0 }}
-          transition={{ duration: 0.2 }}
-        >
-          <ChevronDown className="w-5 h-5" />
-        </motion.div>
-      </button>
-      <motion.div
-        initial={false}
-        animate={{
-          height: isOpen ? 'auto' : 0,
-          opacity: isOpen ? 1 : 0
-        }}
-        transition={{ duration: 0.3, ease: 'easeInOut' }}
-        className="overflow-hidden"
-      >
-        <div className="p-4">
-          {children}
-        </div>
-      </motion.div>
     </div>
   )
 }
@@ -279,11 +246,96 @@ function ConfettiDemos() {
   )
 }
 
-export function ComponentsPage() {
-  return (
-    <div className="min-h-screen bg-background text-foreground pb-20">
-      <ThemeSwitcher />
+// Toggle Badge Component
+function ToggleBadge({
+  text1,
+  text2,
+  color1,
+  color2,
+  hoverColor1,
+  hoverColor2,
+  ringColor,
+  textColor
+}: {
+  text1: string
+  text2: string
+  color1: string
+  color2: string
+  hoverColor1: string
+  hoverColor2: string
+  ringColor: string
+  textColor: string
+}) {
+  const [isToggled, setIsToggled] = useState(false)
+  const [isAnimating, setIsAnimating] = useState(false)
+  const [hasLeftAfterClick, setHasLeftAfterClick] = useState(true)
 
+  const handleClick = () => {
+    setIsAnimating(true)
+    setHasLeftAfterClick(false)
+    setIsToggled(!isToggled)
+    setTimeout(() => {
+      setIsAnimating(false)
+    }, 300)
+  }
+
+  const handleMouseLeave = () => {
+    setHasLeftAfterClick(true)
+  }
+
+  const canHover = !isAnimating && hasLeftAfterClick
+
+  return (
+    <div className="relative" onMouseLeave={handleMouseLeave}>
+      {isAnimating && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: [0, 1, 0], scale: [0.8, 1.1, 1] }}
+          transition={{ duration: 0.3, ease: "easeInOut" }}
+          className={`absolute inset-0 rounded-full ${ringColor} ring-2 ring-offset-2 pointer-events-none`}
+        />
+      )}
+      <motion.button
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        onClick={handleClick}
+        className={`cursor-pointer ${canHover ? 'group' : ''} relative ${isToggled ? color2 : color1} ${canHover ? (isToggled ? hoverColor1 : hoverColor2) : ''} ${textColor} font-semibold text-xs px-3 py-1.5 rounded-full transition-all duration-200 ease-in-out shadow hover:shadow-md`}
+      >
+        <div className="relative flex items-center justify-center gap-1.5">
+          <span className="relative inline-block overflow-hidden h-4">
+            {/* text1: starts at center in State 1, moves to above in State 2 */}
+            <span className={`block transition-transform duration-300 ${isToggled ? '-translate-y-full' : 'translate-y-0'} ${canHover ? (isToggled ? 'group-hover:translate-y-0' : 'group-hover:-translate-y-full') : ''}`}>
+              {text1}
+            </span>
+            {/* text2: starts below in State 1, moves to center in State 2 */}
+            <span className={`absolute inset-0 transition-transform duration-300 ${isToggled ? 'translate-y-0' : 'translate-y-full'} ${canHover ? (isToggled ? 'group-hover:translate-y-full' : 'group-hover:translate-y-0') : ''}`}>
+              {text2}
+            </span>
+          </span>
+
+          {/* Icon: always at 0° in base states, rotates on hover */}
+          <svg
+            className={`w-3.5 h-3.5 transition-transform duration-200 ${canHover ? (isToggled ? 'group-hover:-rotate-45' : 'group-hover:rotate-45') : ''}`}
+            viewBox="0 0 24 24"
+          >
+            <circle fill="currentColor" r="11" cy="12" cx="12"></circle>
+            <path
+              strokeLinejoin="round"
+              strokeLinecap="round"
+              strokeWidth="2"
+              stroke="white"
+              d="M7.5 16.5L16.5 7.5M16.5 7.5H10.5M16.5 7.5V13.5"
+            ></path>
+          </svg>
+        </div>
+      </motion.button>
+    </div>
+  )
+}
+
+export default function ComponentsPage() {
+  return (
+    <div className="pb-20">
       <motion.div
         variants={containerVariants}
         initial="hidden"
@@ -319,11 +371,15 @@ export function ComponentsPage() {
                   This card features an animated gradient beam that travels along its border, creating a dynamic and eye-catching effect.
                 </p>
               </CardContent>
-              <BorderBeam duration={12} size={150} />
+              <BorderBeam size={250} duration={12} delay={9} />
             </Card>
 
             {/* Magic Card */}
-            <MagicCard gradientColor="var(--brand-purple)" gradientOpacity={0.3}>
+            <MagicCard
+              gradientColor="#262626"
+              gradientOpacity={0.8}
+              gradientSize={200}
+            >
               <CardHeader>
                 <CardTitle>Magic Card</CardTitle>
                 <CardDescription>Interactive gradient spotlight effect</CardDescription>
@@ -336,7 +392,11 @@ export function ComponentsPage() {
             </MagicCard>
 
             {/* Magic Card Login Form */}
-            <MagicCard className="md:col-span-2">
+            <MagicCard
+              className="md:col-span-2"
+              gradientColor="#262626"
+              gradientOpacity={0.8}
+            >
               <CardHeader className="border-b">
                 <CardTitle>Login Form with Magic Card</CardTitle>
                 <CardDescription>Experience the interactive gradient effect on a functional form</CardDescription>
@@ -396,6 +456,146 @@ export function ComponentsPage() {
               <ButtonStates />
             </CardContent>
           </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Animated Badges</CardTitle>
+              <CardDescription>Interactive badges with text flip and icon animations</CardDescription>
+            </CardHeader>
+            <CardContent className="flex flex-wrap gap-3">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="cursor-pointer group relative bg-emerald-400 hover:bg-purple-400 text-black font-semibold text-xs px-3 py-1.5 rounded-full transition-all duration-200 ease-in-out shadow hover:shadow-md"
+              >
+                <div className="relative flex items-center justify-center gap-1.5">
+                  <span className="relative inline-block overflow-hidden h-4">
+                    <span className="block transition-transform duration-300 group-hover:-translate-y-full">
+                      Premium
+                    </span>
+                    <span className="absolute inset-0 transition-transform duration-300 translate-y-full group-hover:translate-y-0">
+                      Included
+                    </span>
+                  </span>
+
+                  <svg
+                    className="w-3.5 h-3.5 transition-transform duration-200 group-hover:rotate-45"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle fill="currentColor" r="11" cy="12" cx="12"></circle>
+                    <path
+                      strokeLinejoin="round"
+                      strokeLinecap="round"
+                      strokeWidth="2"
+                      stroke="white"
+                      d="M7.5 16.5L16.5 7.5M16.5 7.5H10.5M16.5 7.5V13.5"
+                    ></path>
+                  </svg>
+                </div>
+              </motion.button>
+
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="cursor-pointer group relative bg-blue-400 hover:bg-pink-400 text-white font-semibold text-xs px-3 py-1.5 rounded-full transition-all duration-200 ease-in-out shadow hover:shadow-md"
+              >
+                <div className="relative flex items-center justify-center gap-1.5">
+                  <span className="relative inline-block overflow-hidden h-4">
+                    <span className="block transition-transform duration-300 group-hover:-translate-y-full">
+                      Pro
+                    </span>
+                    <span className="absolute inset-0 transition-transform duration-300 translate-y-full group-hover:translate-y-0">
+                      Active
+                    </span>
+                  </span>
+
+                  <svg
+                    className="w-3.5 h-3.5 transition-transform duration-200 group-hover:rotate-45"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle fill="currentColor" r="11" cy="12" cx="12"></circle>
+                    <path
+                      strokeLinejoin="round"
+                      strokeLinecap="round"
+                      strokeWidth="2"
+                      stroke="currentColor"
+                      d="M7.5 16.5L16.5 7.5M16.5 7.5H10.5M16.5 7.5V13.5"
+                    ></path>
+                  </svg>
+                </div>
+              </motion.button>
+
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="cursor-pointer group relative bg-orange-400 hover:bg-cyan-400 text-black font-semibold text-xs px-3 py-1.5 rounded-full transition-all duration-200 ease-in-out shadow hover:shadow-md"
+              >
+                <div className="relative flex items-center justify-center gap-1.5">
+                  <span className="relative inline-block overflow-hidden h-4">
+                    <span className="block transition-transform duration-300 group-hover:-translate-y-full">
+                      New
+                    </span>
+                    <span className="absolute inset-0 transition-transform duration-300 translate-y-full group-hover:translate-y-0">
+                      Try It
+                    </span>
+                  </span>
+
+                  <svg
+                    className="w-3.5 h-3.5 transition-transform duration-200 group-hover:rotate-45"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle fill="currentColor" r="11" cy="12" cx="12"></circle>
+                    <path
+                      strokeLinejoin="round"
+                      strokeLinecap="round"
+                      strokeWidth="2"
+                      stroke="white"
+                      d="M7.5 16.5L16.5 7.5M16.5 7.5H10.5M16.5 7.5V13.5"
+                    ></path>
+                  </svg>
+                </div>
+              </motion.button>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Toggle Badges</CardTitle>
+              <CardDescription>Click to toggle between states</CardDescription>
+            </CardHeader>
+            <CardContent className="flex flex-wrap gap-3">
+              <ToggleBadge
+                text1="Premium"
+                text2="Included"
+                color1="bg-emerald-400"
+                color2="bg-purple-400"
+                hoverColor1="hover:bg-emerald-400"
+                hoverColor2="hover:bg-purple-400"
+                ringColor="ring-purple-400"
+                textColor="text-black"
+              />
+              <ToggleBadge
+                text1="Pro"
+                text2="Active"
+                color1="bg-blue-400"
+                color2="bg-pink-400"
+                hoverColor1="hover:bg-blue-400"
+                hoverColor2="hover:bg-pink-400"
+                ringColor="ring-pink-400"
+                textColor="text-white"
+              />
+              <ToggleBadge
+                text1="New"
+                text2="Try It"
+                color1="bg-orange-400"
+                color2="bg-cyan-400"
+                hoverColor1="hover:bg-orange-400"
+                hoverColor2="hover:bg-cyan-400"
+                ringColor="ring-cyan-400"
+                textColor="text-black"
+              />
+            </CardContent>
+          </Card>
         </motion.section>
 
         {/* Accordions */}
@@ -430,20 +630,40 @@ export function ComponentsPage() {
             <Card>
               <CardHeader>
                 <CardTitle>Nested Accordions</CardTitle>
-                <CardDescription>Accordions within a card component</CardDescription>
+                <CardDescription>Accordions nested inside other accordions</CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
-                <AccordionItem title="Features" defaultOpen>
-                  <div className="space-y-2">
-                    <Badge>17 Themes</Badge>
-                    <Badge variant="secondary">Motion Animations</Badge>
-                    <Badge variant="outline">Magic UI</Badge>
+                <AccordionItem title="Project Information" defaultOpen>
+                  <div className="space-y-3 pt-2">
+                    <p className="text-sm text-muted-foreground mb-3">
+                      Explore the details of this project by expanding the sections below.
+                    </p>
+
+                    <AccordionItem title="Features" defaultOpen>
+                      <div className="space-y-2">
+                        <Badge>8 Themes</Badge>
+                        <Badge variant="secondary">Motion Animations</Badge>
+                        <Badge variant="outline">Magic UI</Badge>
+                      </div>
+                    </AccordionItem>
+
+                    <AccordionItem title="Tech Stack">
+                      <p className="text-sm text-muted-foreground">
+                        Vite + React 19 + TypeScript + Tailwind CSS v4 + shadcn/ui + motion.dev
+                      </p>
+                    </AccordionItem>
+
+                    <AccordionItem title="Components">
+                      <div className="space-y-2">
+                        <p className="text-sm text-muted-foreground">100+ production-ready components</p>
+                      </div>
+                    </AccordionItem>
                   </div>
                 </AccordionItem>
 
-                <AccordionItem title="Tech Stack">
+                <AccordionItem title="Documentation">
                   <p className="text-sm text-muted-foreground">
-                    Vite + React 19 + TypeScript + Tailwind CSS v4 + shadcn/ui + motion.dev
+                    Complete documentation with examples and best practices for all components.
                   </p>
                 </AccordionItem>
               </CardContent>
@@ -529,6 +749,146 @@ export function ComponentsPage() {
               <Button className="w-full">Submit</Button>
             </CardFooter>
           </Card>
+        </motion.section>
+
+        {/* Tooltips & Toasts */}
+        <motion.section variants={itemVariants} className="space-y-6">
+          <h2 className="text-3xl font-bold flex items-center gap-3">
+            <span className="text-4xl">💬</span>
+            Tooltips & Toast Notifications
+          </h2>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            {/* Tooltips */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Tooltips</CardTitle>
+                <CardDescription>Hover over elements to see helpful tooltips</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <TooltipProvider>
+                  <div className="flex flex-wrap gap-4">
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button variant="outline">
+                          <Info className="w-4 h-4 mr-2" />
+                          Hover me
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>This is a helpful tooltip!</p>
+                      </TooltipContent>
+                    </Tooltip>
+
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button variant="secondary">
+                          <Bell className="w-4 h-4 mr-2" />
+                          Notifications
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>You have 3 new notifications</p>
+                      </TooltipContent>
+                    </Tooltip>
+
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button variant="destructive" size="icon">
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Delete item</p>
+                      </TooltipContent>
+                    </Tooltip>
+
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Badge variant="outline" className="cursor-help">Premium Feature</Badge>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Upgrade to Pro to unlock this feature</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </div>
+                </TooltipProvider>
+              </CardContent>
+            </Card>
+
+            {/* Toast Notifications */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Toast Notifications</CardTitle>
+                <CardDescription>Click buttons to trigger toast notifications</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <div className="flex flex-wrap gap-3">
+                  <Button
+                    variant="default"
+                    onClick={() => toast.success('Success!', {
+                      description: 'Your changes have been saved successfully.'
+                    })}
+                  >
+                    Success Toast
+                  </Button>
+
+                  <Button
+                    variant="destructive"
+                    onClick={() => toast.error('Error!', {
+                      description: 'Something went wrong. Please try again.'
+                    })}
+                  >
+                    Error Toast
+                  </Button>
+
+                  <Button
+                    variant="outline"
+                    onClick={() => toast.info('Info', {
+                      description: 'This is an informational message.'
+                    })}
+                  >
+                    Info Toast
+                  </Button>
+
+                  <Button
+                    variant="secondary"
+                    onClick={() => toast.warning('Warning!', {
+                      description: 'Please review your input before proceeding.'
+                    })}
+                  >
+                    Warning Toast
+                  </Button>
+
+                  <Button
+                    onClick={() => toast('Custom Toast', {
+                      description: 'This toast has a custom action button.',
+                      action: {
+                        label: 'Undo',
+                        onClick: () => toast.success('Undone!')
+                      }
+                    })}
+                  >
+                    With Action
+                  </Button>
+
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      const promise = () => new Promise((resolve) => setTimeout(resolve, 2000))
+                      toast.promise(promise(), {
+                        loading: 'Loading...',
+                        success: 'Data loaded successfully!',
+                        error: 'Failed to load data'
+                      })
+                    }}
+                  >
+                    Promise Toast
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </motion.section>
       </motion.div>
     </div>

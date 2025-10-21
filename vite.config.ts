@@ -14,4 +14,8 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  server: {
+    port: 3456,
+    strictPort: false, // Will try adjacent ports if 3456 is in use
+  },
 })
